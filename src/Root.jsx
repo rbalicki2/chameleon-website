@@ -27,10 +27,10 @@ class StyleContext {
 
   get headingStyleFromSectionDepth() {
     return `
-      font-size: ${40 - 5 * this.context.sectionDepth}px;
+      font-size: ${40 - (5 * this.context.sectionDepth)}px;
       line-height: 1em;
-      font-weight: ${800 - 100 * this.context.sectionDepth};
-      margin-bottom: ${20 - 2 * this.context.sectionDepth}px;
+      font-weight: ${800 - (100 * this.context.sectionDepth)};
+      margin-bottom: ${20 - (2 * this.context.sectionDepth)}px;
     `;
   }
 
@@ -70,7 +70,7 @@ const contextReducer = (previousContext, action) => {
     default:
       throw new Error('unhandled type');
   }
-}
+};
 
 const {
   updateContextGenerator,
