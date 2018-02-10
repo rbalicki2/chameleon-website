@@ -17,6 +17,8 @@ module.exports = {
     'func-style': [2, 'expression'],
     'no-use-before-define': 0,
     'no-unused-vars': [2, { ignoreRestSiblings: true }],
+    'no-unused-expressions': 0,
+    'flowtype/no-unused-expressions': 2,
     'max-len': [2, {
       code: 100,
       tabWidth: 2,
