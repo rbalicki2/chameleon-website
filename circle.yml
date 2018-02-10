@@ -6,8 +6,7 @@ dependencies:
   override:
     # Install dependencies
     - yarn
-  cache_directories:
-    - ~/.cache/yarn
+
 test:
   override:
     # No tests or linting, this is only a test project!
