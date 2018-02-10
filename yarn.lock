@@ -1492,8 +1492,9 @@ chalk@^2.0.0, chalk@^2.1.0, chalk@^2.3.0:
     escape-string-regexp "^1.0.5"
     supports-color "^4.0.0"
 
-"chameleon@file:../chameleon":
+chameleon@^0.2.0:
   version "0.2.0"
+  resolved "https://registry.yarnpkg.com/chameleon/-/chameleon-0.2.0.tgz#094fa0c2888e3d94bff0d1f9d9463f494cb5a63e"
 
 change-emitter@^0.1.2:
   version "0.1.6"
@@ -2456,9 +2457,9 @@ eslint-plugin-eslint-comments@^2.0.1:
     escape-string-regexp "^1.0.5"
     ignore "^3.3.7"
 
-eslint-plugin-flowtype@^2.39.1:
-  version "2.42.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.42.0.tgz#7fcc98df4ed9482a22ac10ba4ca48d649c4c733a"
+eslint-plugin-flowtype@^2.43.0:
+  version "2.43.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.43.0.tgz#47cdac5f01cda53f1c3e8477f0c83fee66a1606e"
   dependencies:
     lodash "^4.15.0"
 
@@ -2914,9 +2915,9 @@ flexbox-react@^4.4.0:
     "@types/react" "^15.0.21"
     "@types/react-dom" "^0.14.23"
 
-flow-bin@^0.59.0:
-  version "0.59.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.59.0.tgz#8c151ee7f09f1deed9bf0b9d1f2e8ab9d470f1bb"
+flow@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/flow/-/flow-0.2.3.tgz#f8da65efa249127ec99376a28896572a9795d1af"
 
 flush-write-stream@^1.0.0:
   version "1.0.2"
