@@ -3,7 +3,7 @@ if [ -z $CIRCLECI ]; then
   exit 1
 fi
 
-S3_BUCKET=evn-website
+S3_BUCKET=chameleon-js
 S3_BUCKET_FOLDER=$1
 
 if [ -z $1 ]; then

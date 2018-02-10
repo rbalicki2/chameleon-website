@@ -1,5 +1,5 @@
 {
-  "name": "chameleon-example",
+  "name": "chameleon-website",
   "dependencies": {
     "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.26.0",
