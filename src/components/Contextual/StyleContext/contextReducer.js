@@ -14,6 +14,8 @@ export default (oldContext: StyleContext, action: Action): StyleContext => {
       return oldContext.enterHeader();
     case 'ENTER_APP_CONTAINER':
       return oldContext.enterAppContainer();
+    case 'ENTER_JUMBOTRON':
+      return oldContext.enterJumbotron();
     default:
       (action: empty);
   }

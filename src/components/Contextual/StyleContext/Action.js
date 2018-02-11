@@ -13,10 +13,13 @@ export type Action = ({
   type: 'ENTER_HEADING',
 } | {
   type: 'ENTER_APP_CONTAINER',
+} | {
+  type: 'ENTER_JUMBOTRON',
 });
 
 export type ActionType = 'SET_TIME_OF_DAY'
   | 'INCREMENT_SECTION_DEPTH'
   | 'INCREMENT_PANEL_DEPTH'
   | 'ENTER_HEADING'
-  | 'ENTER_APP_CONTAINER';
+  | 'ENTER_APP_CONTAINER'
+  | 'ENTER_JUMBOTRON';

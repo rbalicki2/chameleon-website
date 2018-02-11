@@ -7,4 +7,5 @@ export default new StyleContext({
   timeOfDay: 'DAY',
   inAppContainer: false,
   inHeader: false,
+  textSizeMultiple: 1,
 });

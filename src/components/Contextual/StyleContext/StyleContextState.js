@@ -7,4 +7,5 @@ export type StyleContextState = {
   timeOfDay: TimeOfDay,
   inAppContainer: boolean,
   inHeader: boolean,
+  textSizeMultiple: number,
 };

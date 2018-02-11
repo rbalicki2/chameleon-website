@@ -2,7 +2,6 @@
 import { type TimeOfDay } from './TimeOfDay';
 import generateColorPalette, { type ColorPalette } from './ColorPalette';
 import { type StyleContextState } from './StyleContextState';
-import { type BreakpointName } from './BreakpointName';
 
 type CssProperty = string;
 type CssDeclaration = string;
@@ -25,6 +24,19 @@ export default class StyleContext {
   incrementSectionDepth(): StyleContext {
     return this.update({
       sectionDepth: this.state.sectionDepth + 1,
+    });
+  }
+
+  enterJumbotron(): StyleContext {
+    if (this.state.sectionDepth !== 0) {
+      throw new Error('Do not nest <Jumbotron /> components inside <Section /> components');
+    }
+    if (this.state.panelDepth !== 0) {
+      throw new Error('Do not nest <Jumbotron /> components inside <Panel /> components');
+    }
+    return this.update({
+      sectionDepth: 1,
+      textSizeMultiple: 1.3,
     });
   }
 
@@ -54,6 +66,9 @@ export default class StyleContext {
   }
 
   enterHeader(): StyleContext {
+    if (!this.state.sectionDepth) {
+      throw new Error('Header-like components must be inside of sections');
+    }
     if (this.state.inHeading) {
       throw new Error('Do not nest Header-like components');
     }
@@ -78,16 +93,6 @@ export default class StyleContext {
     return `${cssProperty} 0.4s ${timingFunction}`;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  getMediaQuery(breakpointName: BreakpointName): string {
-    const minWidth = ({
-      DESKTOP: 1024,
-      TABLET: 768,
-      MOBILE: 0,
-    })[breakpointName];
-    return `screen and (min-width: ${minWidth}px)`;
-  }
-
   get panelSpacing(): string {
     return `
       padding: ${50 - (this.state.panelDepth * 10)}px;
@@ -109,8 +114,8 @@ export default class StyleContext {
 
   get headerTextProperties(): string {
     const { panelDepth, sectionDepth } = this.state;
-    const fontSize = 50 - (panelDepth * 10) - (sectionDepth * 5);
-    const fontWeight = 800 - (panelDepth * 200) - (sectionDepth * 100);
+    const fontSize = (55 - (panelDepth * 10) - (sectionDepth * 5)) * this.state.textSizeMultiple;
+    const fontWeight = 900 - (panelDepth * 200) - (sectionDepth * 100);
     const lineSpacing = fontWeight >= 800
       ? 'letter-spacing: 1px;'
       : '';
@@ -120,7 +125,7 @@ export default class StyleContext {
       line-height: 1.5em;
       font-family: 'Muli';
       font-weight: ${fontWeight};
-      text-align: ${this.isInPanel ? 'center' : 'left'};
+      text-align: ${this.isInPanel ? 'left' : 'center'};
       ${lineSpacing}
       margin-bottom: ${fontSize / 3}px;
       text-shadow: ${this.colorPalette.headerBoxShadow};
@@ -135,7 +140,7 @@ export default class StyleContext {
 
   get subHeaderTextProperties(): string {
     const { panelDepth, sectionDepth } = this.state;
-    const fontSize = 18 - (panelDepth * 5) - (sectionDepth * 3);
+    const fontSize = (21 - (panelDepth * 5) - (sectionDepth * 3)) * this.state.textSizeMultiple;
     const fontWeight = 600 - (panelDepth * 200) - (sectionDepth * 100);
     return `
       margin-top: ${-1 * fontSize * 1.25}px;
@@ -145,7 +150,7 @@ export default class StyleContext {
       letter-spacing: 1px;
       font-family: 'Muli';
       font-size: ${fontSize}px;
-      text-align: ${this.isInPanel ? 'center' : 'left'};
+      text-align: ${this.isInPanel ? 'left' : 'center'};
       font-weight: ${fontWeight};
       text-shadow: ${this.colorPalette.subHeaderBoxShadow};
     `;
@@ -154,6 +159,13 @@ export default class StyleContext {
   get subHeaderColor(): string {
     return `
       color: ${this.colorPalette.fgSubtitle};
+    `;
+  }
+
+  get sectionMargins(): string {
+    const { sectionDepth } = this.state;
+    return `
+      margin: ${100 - (20 * sectionDepth)}px 0;
     `;
   }
 }
