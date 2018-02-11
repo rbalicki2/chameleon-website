@@ -2,6 +2,7 @@
 import { type TimeOfDay } from './TimeOfDay';
 import generateColorPalette, { type ColorPalette } from './ColorPalette';
 import { type StyleContextState } from './StyleContextState';
+import { type BreakpointName } from './BreakpointName';
 
 type CssProperty = string;
 type CssDeclaration = string;
@@ -75,5 +76,30 @@ export default class StyleContext {
     timingFunction: CssTimingFunction = 'ease-in-out'
   ): CssDeclaration {
     return `${cssProperty} 0.4s ${timingFunction}`;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  getMediaQuery(breakpointName: BreakpointName): string {
+    const minWidth = ({
+      DESKTOP: 1024,
+      TABLET: 768,
+      MOBILE: 0,
+    })[breakpointName];
+    return `screen and (min-width: ${minWidth}px)`;
+  }
+
+  get panelSpacing(): string {
+    return `
+      padding: ${50 - (this.state.panelDepth * 10)}px;
+      margin-bottom: ${25 - (this.state.panelDepth * 5)}px;
+    `;
+  }
+
+  get panelColoring(): string {
+    return `
+      border: 1px solid ${this.colorPalette.panelBorder};
+      background-color: ${this.colorPalette.panelBg};
+      box-shadow: ${this.colorPalette.componentBoxShadow};
+    `;
   }
 }

@@ -1,6 +1,8 @@
 // @flow
 import React from 'react';
+import AppContainer from 'src/components/Contextual/AppContainer';
 import TimeOfDayToggler from './TimeOfDayToggler';
+import Routes from './Routes';
 
 type ToggleTimeOfDay = () => void;
 
@@ -17,4 +19,7 @@ export default ({
     isDay={isDay}
     toggleTimeOfDay={toggleTimeOfDay}
   />
+  <AppContainer>
+    <Routes />
+  </AppContainer>
 </div>);
