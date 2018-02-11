@@ -6,5 +6,5 @@ export default new StyleContext({
   panelDepth: 0,
   timeOfDay: 'DAY',
   inAppContainer: false,
-  inHeading: false,
+  inHeader: false,
 });

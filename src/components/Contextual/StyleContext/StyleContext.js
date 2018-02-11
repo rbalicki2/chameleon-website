@@ -53,12 +53,12 @@ export default class StyleContext {
     });
   }
 
-  enterHeading(): StyleContext {
+  enterHeader(): StyleContext {
     if (this.state.inHeading) {
-      throw new Error('Do not nest <Heading /> components');
+      throw new Error('Do not nest Header-like components');
     }
     return this.update({
-      inHeading: true,
+      inHeader: true,
     });
   }
 
@@ -100,6 +100,60 @@ export default class StyleContext {
       border: 1px solid ${this.colorPalette.panelBorder};
       background-color: ${this.colorPalette.panelBg};
       box-shadow: ${this.colorPalette.componentBoxShadow};
+    `;
+  }
+
+  get isInPanel(): boolean {
+    return this.state.panelDepth !== 0;
+  }
+
+  get headerTextProperties(): string {
+    const { panelDepth, sectionDepth } = this.state;
+    const fontSize = 50 - (panelDepth * 10) - (sectionDepth * 5);
+    const fontWeight = 800 - (panelDepth * 200) - (sectionDepth * 100);
+    const lineSpacing = fontWeight >= 800
+      ? 'letter-spacing: 1px;'
+      : '';
+
+    return `
+      font-size: ${fontSize}px;
+      line-height: 1.5em;
+      font-family: 'Muli';
+      font-weight: ${fontWeight};
+      text-align: ${this.isInPanel ? 'center' : 'left'};
+      ${lineSpacing}
+      margin-bottom: ${fontSize / 3}px;
+      text-shadow: ${this.colorPalette.headerBoxShadow};
+    `;
+  }
+
+  get headerColor(): string {
+    return `
+      color: ${this.colorPalette.fgTitle};
+    `;
+  }
+
+  get subHeaderTextProperties(): string {
+    const { panelDepth, sectionDepth } = this.state;
+    const fontSize = 18 - (panelDepth * 5) - (sectionDepth * 3);
+    const fontWeight = 600 - (panelDepth * 200) - (sectionDepth * 100);
+    return `
+      margin-top: ${-1 * fontSize * 1.25}px;
+      margin-bottom: ${fontSize}px;
+      line-height: 1.5em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: 'Muli';
+      font-size: ${fontSize}px;
+      text-align: ${this.isInPanel ? 'center' : 'left'};
+      font-weight: ${fontWeight};
+      text-shadow: ${this.colorPalette.subHeaderBoxShadow};
+    `;
+  }
+
+  get subHeaderColor(): string {
+    return `
+      color: ${this.colorPalette.fgSubtitle};
     `;
   }
 }

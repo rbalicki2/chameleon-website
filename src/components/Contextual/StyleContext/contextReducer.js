@@ -11,7 +11,7 @@ export default (oldContext: StyleContext, action: Action): StyleContext => {
     case 'INCREMENT_PANEL_DEPTH':
       return oldContext.incrementPanelDepth();
     case 'ENTER_HEADING':
-      return oldContext.enterHeading();
+      return oldContext.enterHeader();
     case 'ENTER_APP_CONTAINER':
       return oldContext.enterAppContainer();
     default:

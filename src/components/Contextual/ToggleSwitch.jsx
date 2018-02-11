@@ -21,9 +21,11 @@ const Slider = styled.span`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${({ context }): { context: StyleContext } => context.colorPalette.lightGrayBg};
-  -webkit-transition: .4s;
-  transition: .4s;
+  ${({ context }) => `
+    background-color: ${context.colorPalette.lightGrayBg};
+    transition: ${context.getTransition()};
+    box-shadow: ${context.colorPalette.componentBoxShadow};
+  `}
 
   &:before {
     position: absolute;
@@ -33,14 +35,11 @@ const Slider = styled.span`
     left: 4px;
     bottom: 4px;
     background-color: white;
-    transition: ${({ context }) => context.getTransition()};
     border-radius: 50%;
-
-    ${({ isChecked }) => (
-    isChecked
-      ? 'transform: translateX(26px);'
-      : 'transform: none;'
-  )}
+    ${({ context, isChecked }) => `
+      transition: ${context.getTransition()};
+      transform: ${isChecked ? 'translateX(26px)' : 'none'};
+    `}
   }
 `;
 

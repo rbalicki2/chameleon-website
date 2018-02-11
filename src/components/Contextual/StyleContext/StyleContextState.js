@@ -6,5 +6,5 @@ export type StyleContextState = {
   panelDepth: number,
   timeOfDay: TimeOfDay,
   inAppContainer: boolean,
-  inHeading: boolean,
+  inHeader: boolean,
 };

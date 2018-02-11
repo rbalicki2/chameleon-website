@@ -5,10 +5,10 @@ import styled from 'styled-components';
 import { ContextProvider } from './StyleContext';
 import { EnterHeader } from './Updaters';
 
-const Header = styled.div`
+const Subheader = styled.div`
   ${({ context }) => `
-    ${context.headerTextProperties}
-    ${context.headerColor}
+    ${context.subHeaderTextProperties}
+    ${context.subHeaderColor}
   `}
 `;
 
@@ -21,9 +21,9 @@ export default ({
 }: HeaderProps) => (
   <EnterHeader>
     <ContextProvider>{context =>
-      (<Header context={context}>
+      (<Subheader context={context}>
         { children }
-      </Header>)
+      </Subheader>)
     }</ContextProvider>
   </EnterHeader>
 );
