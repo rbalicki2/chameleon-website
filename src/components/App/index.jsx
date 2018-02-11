@@ -1,13 +1,20 @@
 // @flow
 import React from 'react';
-import { type TimeOfDay } from 'src/components/Contextual/StyleContext/TimeOfDay';
+import TimeOfDayToggler from './TimeOfDayToggler';
 
 type ToggleTimeOfDay = () => void;
 
+type AppProps = {|
+  toggleTimeOfDay: ToggleTimeOfDay,
+  isDay: boolean,
+|};
+
 export default ({
   toggleTimeOfDay,
-}: {
-  toggleTimeOfDay: ToggleTimeOfDay,
-}) => (<div>
-  <div onClick={toggleTimeOfDay}>t o d</div>
+  isDay,
+}: AppProps) => (<div>
+  <TimeOfDayToggler
+    isDay={isDay}
+    toggleTimeOfDay={toggleTimeOfDay}
+  />
 </div>);

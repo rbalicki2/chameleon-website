@@ -12,15 +12,16 @@ const commonStyle = `
   bottom: 0;
   right: 0;
   z-index: -1;
+  transition: all 0.45s;
 `;
 
 // $FlowFixMe
 const bgByTimeOfDay: { [TimeOfDay]: string } = {
   DAY: `
-    background-color: yellow;
+    background: linear-gradient(135deg, #fdfc52, #63db2c);
   `,
   NIGHT: `
-    background-color: blue;
+    background: linear-gradient(135deg, #041197, #3A14A4);
   `,
 };
 

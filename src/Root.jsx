@@ -18,6 +18,7 @@ export default () => (<StateProvider initialValue="DAY">
           toggleTimeOfDay={
             () => setTimeOfDay(time === 'DAY' ? 'NIGHT' : 'DAY')
           }
+          isDay={time === 'DAY'}
         />
       </SetTimeOfDay>)
   }
