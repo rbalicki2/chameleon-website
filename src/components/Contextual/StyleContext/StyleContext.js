@@ -3,6 +3,10 @@ import { type TimeOfDay } from './TimeOfDay';
 import generateColorPalette, { type ColorPalette } from './ColorPalette';
 import { type StyleContextState } from './StyleContextState';
 
+type CssProperty = string;
+type CssDeclaration = string;
+type CssTimingFunction = string;
+
 export default class StyleContext {
   // TODO rename this to .state
   state: StyleContextState;
@@ -35,5 +39,13 @@ export default class StyleContext {
 
   get colorPalette(): ColorPalette {
     return generateColorPalette(this.state);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  getTransition(
+    cssProperty: CssProperty = 'all',
+    timingFunction: CssTimingFunction = 'ease-in-out'
+  ): CssDeclaration {
+    return `${cssProperty} 0.4s ${timingFunction}`;
   }
 }

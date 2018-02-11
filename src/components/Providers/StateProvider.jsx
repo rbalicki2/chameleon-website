@@ -1,5 +1,5 @@
 // @flow
-import { Component, type Node } from 'react';
+import { Component } from 'react';
 
 /**
  * StateProvider providers a value and a setState method. This is
@@ -28,7 +28,8 @@ type StateProviderState = {
 
 type StateProviderProps = {
   initialValue: any,
-  children: (any, (any) => void) => Node,
+  // children: (any, (any) => void) => Node,
+  children: Function,
 }
 
 export default class StateProvider extends Component<StateProviderProps, StateProviderState> {

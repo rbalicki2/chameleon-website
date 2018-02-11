@@ -11,9 +11,10 @@ const Bg = styled.div`
   bottom: 0;
   right: 0;
   z-index: -1;
-  transition: opacity 0.45s linear;
+  transition: ${({ context }) => context.getTransition('opacity', 'linear')};
   ${({ bg }) => bg}
   ${({ opacity }) => opacity}
+  background-blend-mode: hue;
 `;
 
 // NOTE: we should get bg from context.colorPalette, but since we're actually
@@ -29,7 +30,7 @@ const bgByTimeOfDay = {
   `,
 };
 
-const opacityBySelected = selected => `opacity: ${selected ? 1 : 0}`;
+const opacityBySelected = selected => `opacity: ${selected ? 1 : 0};`;
 
 export default () => (<ContextProvider>{(context: StyleContext) => {
   const { timeOfDay } = context;
@@ -37,10 +38,12 @@ export default () => (<ContextProvider>{(context: StyleContext) => {
     <Bg
       opacity={opacityBySelected(timeOfDay === 'DAY')}
       bg={bgByTimeOfDay.DAY}
+      context={context}
     />
     <Bg
       opacity={opacityBySelected(timeOfDay === 'NIGHT')}
       bg={bgByTimeOfDay.NIGHT}
+      context={context}
     />
   </div>);
 }}</ContextProvider>);

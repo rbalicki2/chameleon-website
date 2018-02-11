@@ -51,6 +51,7 @@
     "eslint-stats": "^1.0.0",
     "file-loader": "^0.9.0",
     "flow": "^0.2.3",
+    "flow-bin": "^0.65.0",
     "html-webpack-plugin": "^2.26.0",
     "node-sass": "^4.5.3",
     "postcss-loader": "^2.0.10",

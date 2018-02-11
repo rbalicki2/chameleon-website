@@ -10,6 +10,8 @@ export default (oldContext: StyleContext, action: Action): StyleContext => {
       return oldContext.setTimeOfDay(action.timeOfDay);
     case 'INCREMENT_PANEL_DEPTH':
       return oldContext;
+    case 'ENTER_HEADING':
+      return oldContext;
     default:
       (action: empty);
   }

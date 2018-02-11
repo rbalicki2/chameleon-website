@@ -8,9 +8,11 @@ import Background from './Background';
 
 type TimeOfDayUpdater = (TimeOfDay) => void;
 
+// $FlowFixMe - bah!
 export default () => (<StateProvider initialValue="DAY">
   {
     (time: TimeOfDay, setTimeOfDay: TimeOfDayUpdater) =>
+      // $FlowFixMe
       (<SetTimeOfDay timeOfDay={time}>
         <Background />
         { false && setTimeOfDay }

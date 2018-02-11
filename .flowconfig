@@ -1,3 +1,2 @@
 [options]
 module.name_mapper='^src' ->'<PROJECT_ROOT>/src'
-unsafe.enable_getters_and_setters=true
