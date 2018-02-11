@@ -32,7 +32,7 @@ const bgByTimeOfDay = {
 const opacityBySelected = selected => `opacity: ${selected ? 1 : 0}`;
 
 export default () => (<ContextProvider>{(context: StyleContext) => {
-  const { timeOfDay } = context.context;
+  const { timeOfDay } = context;
   return (<div>
     <Bg
       opacity={opacityBySelected(timeOfDay === 'DAY')}

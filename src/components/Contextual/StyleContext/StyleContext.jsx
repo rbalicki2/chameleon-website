@@ -5,21 +5,21 @@ import { type StyleContextState } from './StyleContextState';
 
 export default class StyleContext {
   // TODO rename this to .state
-  context: StyleContextState;
+  state: StyleContextState;
   constructor(context: StyleContextState) {
-    this.context = context;
+    this.state = context;
   }
 
   update(partialContext: $Shape<StyleContextState>): StyleContext {
     return new StyleContext({
-      ...this.context,
+      ...this.state,
       ...partialContext,
     });
   }
 
   incrementSectionDepth(): StyleContext {
     return this.update({
-      sectionDepth: this.context.sectionDepth + 1,
+      sectionDepth: this.state.sectionDepth + 1,
     });
   }
 
@@ -30,10 +30,10 @@ export default class StyleContext {
   }
 
   get timeOfDay(): TimeOfDay {
-    return this.context.timeOfDay;
+    return this.state.timeOfDay;
   }
 
   get colorPalette(): ColorPalette {
-    return generateColorPalette(this.context);
+    return generateColorPalette(this.state);
   }
 }

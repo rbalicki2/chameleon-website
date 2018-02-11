@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ToggleSwitch from '../Contextual/ToggleSwitch';
 
 type TimeOfDayTogglerProps = {|
-  toggleTimeOfDay: ToggleTimeOfDay,
+  toggleTimeOfDay: () => void,
   isDay: boolean,
 |};
 
