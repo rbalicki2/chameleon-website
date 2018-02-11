@@ -9,9 +9,11 @@ export default (oldContext: StyleContext, action: Action): StyleContext => {
     case 'SET_TIME_OF_DAY':
       return oldContext.setTimeOfDay(action.timeOfDay);
     case 'INCREMENT_PANEL_DEPTH':
-      return oldContext;
+      return oldContext.incrementPanelDepth();
     case 'ENTER_HEADING':
-      return oldContext;
+      return oldContext.enterHeading();
+    case 'ENTER_APP_CONTAINER':
+      return oldContext.enterAppContainer();
     default:
       (action: empty);
   }

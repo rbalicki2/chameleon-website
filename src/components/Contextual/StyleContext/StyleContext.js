@@ -27,9 +27,37 @@ export default class StyleContext {
     });
   }
 
+  incrementPanelDepth(): StyleContext {
+    if (this.state.panelDepth === 2) {
+      throw new Error('Do not nest <Panel> components more than twice');
+    }
+    return this.update({
+      panelDepth: this.state.panelDepth + 1,
+      sectionDepth: 0,
+    });
+  }
+
   setTimeOfDay(timeOfDay: TimeOfDay): StyleContext {
     return this.update({
       timeOfDay,
+    });
+  }
+
+  enterAppContainer(): StyleContext {
+    if (this.state.inAppContainer) {
+      throw new Error('Do not nest <AppContainer /> components');
+    }
+    return this.update({
+      inAppContainer: true,
+    });
+  }
+
+  enterHeading(): StyleContext {
+    if (this.state.inHeading) {
+      throw new Error('Do not nest <Heading /> components');
+    }
+    return this.update({
+      inHeading: true,
     });
   }
 
