@@ -32,13 +32,13 @@ export default (state: StyleContextState): ColorPalette => {
   return {
     bg: '#041197',
     lightGrayBg: '#b9bac6',
-    fgTitle: 'white',
-    fgSubtitle: 'blue',
-    panelBorder: 'rgba(255, 255, 255, 0.2)',
+    fgTitle: '#cb9310',
+    fgSubtitle: '#d1d4fa',
+    panelBorder: 'rgba(120, 120, 120, 0.2)',
     panelBg: 'rgba(255, 255, 255, 0.4)',
     componentBoxShadow: '0px 2px 4px 0px rgba(255, 255, 255, 0.1)',
-    headerBoxShadow: '2px 2px rgba(0, 0, 0, 0.1)',
-    subHeaderBoxShadow: '1px 1px 2px rgba(0, 0, 0, 0.07)',
+    headerBoxShadow: '2px 2px rgba(255, 255, 255, 0.05)',
+    subHeaderBoxShadow: '1px 1px 2px rgba(255, 255, 255, 0.07)',
   };
 };
 
