@@ -21,7 +21,7 @@ const Slider = styled.span`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${({ bg }) => bg};
+  background-color: ${({ context }): { context: StyleContext } => context.colorPalette.lightGrayBg};
   -webkit-transition: .4s;
   transition: .4s;
 
@@ -62,11 +62,7 @@ export default ({
     (<Outer onClick={onClick} >
       <Slider
         isChecked={isChecked}
-        bg={
-          context.context.timeOfDay === 'DAY'
-            ? '#c9d4c4'
-            : '#b9bac6'
-        }
+        context={context}
       />
     </Outer>)
   }</ContextProvider>

@@ -3,7 +3,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { ContextProvider } from './StyleContext';
 import type StyleContext from './StyleContext/StyleContext';
-import type TimeOfDay from './StyleContext/TimeOfDay';
 
 const Bg = styled.div`
   position: absolute;
@@ -17,8 +16,11 @@ const Bg = styled.div`
   ${({ opacity }) => opacity}
 `;
 
-// $FlowFixMe
-const bgByTimeOfDay: { [TimeOfDay]: string, isSelected: boolean, } = {
+// NOTE: we should get bg from context.colorPalette, but since we're actually
+// rendering both and transitioning them via opacity, it's way more convenient
+// to have it here, because otherwise we wouldn't be able to access the
+// non-active background gradient
+const bgByTimeOfDay = {
   DAY: `
     background: linear-gradient(135deg, #fdfc52, #63db2c);
   `,
@@ -30,16 +32,6 @@ const bgByTimeOfDay: { [TimeOfDay]: string, isSelected: boolean, } = {
 const opacityBySelected = selected => `opacity: ${selected ? 1 : 0}`;
 
 export default () => (<ContextProvider>{(context: StyleContext) => {
-  // const BgNight = styled.span`
-  //   ${commonStyle}
-  //   ${bgByTimeOfDay.NIGHT}
-  //   ${opacityBySelected(context.context.timeOfDay === 'NIGHT')}
-  // `;
-  // const BgDay = styled.span`
-  //   ${commonStyle}
-  //   ${bgByTimeOfDay.DAY}
-  //   ${opacityBySelected(context.context.timeOfDay === 'DAY')}
-  // `;
   const { timeOfDay } = context.context;
   return (<div>
     <Bg

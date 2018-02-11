@@ -1,18 +1,16 @@
 // @flow
 import { type TimeOfDay } from './TimeOfDay';
-
-export type InternalState = {
-  sectionDepth: number,
-  timeOfDay: TimeOfDay,
-};
+import generateColorPalette, { type ColorPalette } from './ColorPalette';
+import { type StyleContextState } from './StyleContextState';
 
 export default class StyleContext {
-  context: InternalState;
-  constructor(context: InternalState) {
+  // TODO rename this to .state
+  context: StyleContextState;
+  constructor(context: StyleContextState) {
     this.context = context;
   }
 
-  update(partialContext: $Shape<InternalState>): StyleContext {
+  update(partialContext: $Shape<StyleContextState>): StyleContext {
     return new StyleContext({
       ...this.context,
       ...partialContext,
@@ -29,5 +27,13 @@ export default class StyleContext {
     return this.update({
       timeOfDay,
     });
+  }
+
+  get timeOfDay(): TimeOfDay {
+    return this.context.timeOfDay;
+  }
+
+  get colorPalette(): ColorPalette {
+    return generateColorPalette(this.context);
   }
 }
