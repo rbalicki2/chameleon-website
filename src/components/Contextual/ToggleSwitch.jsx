@@ -2,6 +2,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { ContextProvider } from './StyleContext';
+import type StyleContext from './StyleContext/StyleContext';
+
 // https://www.w3schools.com/howto/howto_css_switch.asp
 
 const Outer = styled.div`
@@ -12,14 +15,13 @@ const Outer = styled.div`
 
 const Slider = styled.span`
   border-radius: 34px;
-  background-color: #2196F3;
   position: absolute;
   cursor: pointer;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: ${({ bg }) => bg};
   -webkit-transition: .4s;
   transition: .4s;
 
@@ -56,7 +58,16 @@ export default ({
   isChecked,
   onClick,
 }: ToggleSwitchProps) => (
-  <Outer onClick={onClick}>
-    <Slider isChecked={isChecked} />
-  </Outer>
+  <ContextProvider>{(context: StyleContext) =>
+    (<Outer onClick={onClick} >
+      <Slider
+        isChecked={isChecked}
+        bg={
+          context.context.timeOfDay === 'DAY'
+            ? '#c9d4c4'
+            : '#b9bac6'
+        }
+      />
+    </Outer>)
+  }</ContextProvider>
 );
