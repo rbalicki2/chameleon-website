@@ -103,6 +103,7 @@ export default class StyleContext {
   enterGrid(action: GridAction): StyleContext {
     if (action.gridType === 'FLEXBOX') {
       return this.update({
+        inGridItem: false,
         gridType: action.gridType,
         flexContainerProperties: action.flexContainerProperties,
       });
@@ -110,6 +111,20 @@ export default class StyleContext {
     // N.B. this messes up formatting, but it should be uncommented:
     // (action: empty);
     throw new Error('Non-flexbox grid not implemented');
+  }
+
+  enterGridItem(): StyleContext {
+    if (!this.state.gridType) {
+      throw new Error('Cannot enter grid item without grid');
+    }
+    if (this.state.inGridItem) {
+      throw new Error('Do not nest grid items without a grid');
+    }
+    return this.update({
+      inGridItem: true,
+      gridType: undefined,
+      flexContainerProperties: undefined,
+    });
   }
 
   get timeOfDay(): TimeOfDay {
@@ -145,6 +160,13 @@ export default class StyleContext {
     throw new Error('Unhandled gridType');
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  getGridItemLayout(): string {
+    // TODO do this method
+    return `
+    `;
+  }
+
   get colorPalette(): ColorPalette {
     return generateColorPalette(this.state);
   }
@@ -177,6 +199,22 @@ export default class StyleContext {
     return this.state.panelDepth !== 0;
   }
 
+  get paragraphProperties(): string {
+    const { panelDepth, sectionDepth } = this.state;
+    const fontSize = (20 - (panelDepth * 4) - (sectionDepth * 2)) * this.state.textSizeMultiple;
+    return `
+      font-size: ${fontSize}px;
+      line-height: 1.5em;
+      ${FONT_FAMILY}
+      margin-bottom: ${fontSize}px;
+      color: ${this.colorPalette.fgBodyText};
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    `;
+  }
+
   get headerTextProperties(): string {
     const { panelDepth, sectionDepth } = this.state;
     const fontSize = (55 - (panelDepth * 10) - (sectionDepth * 5)) * this.state.textSizeMultiple;
@@ -206,10 +244,10 @@ export default class StyleContext {
   get subHeaderTextProperties(): string {
     const { panelDepth, sectionDepth } = this.state;
     const fontSize = (22 - (panelDepth * 5) - (sectionDepth * 1)) * this.state.textSizeMultiple;
-    const fontWeight = 600 - (panelDepth * 200) - (sectionDepth * 100);
+    const fontWeight = 200;
     return `
       margin-top: ${-1 * fontSize}px;
-      margin-bottom: ${2 * fontSize}px;
+      margin-bottom: ${1.5 * fontSize}px;
       line-height: 1.5em;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -282,6 +320,7 @@ export default class StyleContext {
     const { panelDepth, sectionDepth } = this.state;
     const padding = 36 - (sectionDepth * 4) - (panelDepth * 8);
     return `
+      margin-bottom: ${padding}px;
       & > * {
         margin-right: ${padding}px;
         margin-left: ${padding}px;

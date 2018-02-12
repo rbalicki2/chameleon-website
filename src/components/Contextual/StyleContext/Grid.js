@@ -18,3 +18,12 @@ export type FlexContainerProperties = {|
     | 'space-between'
     | 'space-around',
 |};
+
+export type GridItemProperties = {|
+  order: number,
+  flexGrow: number,
+  flexShrink: number,
+  flexBasis: any,
+  flex: any,
+  alignSelf: 'flex-start' | 'flex-end',
+|};

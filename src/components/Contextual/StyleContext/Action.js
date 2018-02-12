@@ -20,6 +20,8 @@ export type Action = {|
   type: 'ENTER_BUTTON',
 |} | {|
   type: 'ENTER_BUTTON_GROUP'
+|} | {|
+  type: 'ENTER_GRID_ITEM',
 |};
 
 export type GridAction = {|
@@ -36,4 +38,5 @@ export type ActionType = 'SET_TIME_OF_DAY'
   | 'ENTER_JUMBOTRON'
   | 'ENTER_GRID'
   | 'ENTER_BUTTON'
-  | 'ENTER_BUTTON_GROUP';
+  | 'ENTER_BUTTON_GROUP'
+  | 'ENTER_GRID_ITEM';

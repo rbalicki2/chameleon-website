@@ -22,6 +22,8 @@ export default (oldContext: StyleContext, action: Action): StyleContext => {
       return oldContext.enterButton();
     case 'ENTER_BUTTON_GROUP':
       return oldContext.enterButtonGroup();
+    case 'ENTER_GRID_ITEM':
+      return oldContext.enterGridItem();
     default:
       (action: empty);
   }

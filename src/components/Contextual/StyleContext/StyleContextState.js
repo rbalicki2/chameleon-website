@@ -5,6 +5,7 @@ import { type Alignment } from './Alignment';
 
 export type StyleContextState = {
   sectionDepth: number,
+  sectionAlignment: Alignment,
   panelDepth: number,
   timeOfDay: TimeOfDay,
   inAppContainer: boolean,
@@ -14,5 +15,5 @@ export type StyleContextState = {
   textSizeMultiple: number,
   gridType: ?GridType,
   flexContainerProperties: ?FlexContainerProperties,
-  sectionAlignment: Alignment,
+  inGridItem: boolean,
 };
