@@ -49,7 +49,7 @@ export default (state: StyleContextState): ColorPalette => {
     fgTitle: '#cb9310',
     fgContrast: '#041197',
     fgContrastSaturated: '#041197',
-    fgSharpContrast: '#041197',
+    fgSharpContrast: 'white',
     fgSubtitle: '#d1d4fa',
     fgBodyText: '#d1d4fa',
     increaseContrastTransparent: 'rgba(30, 30, 30, 0.1)',
