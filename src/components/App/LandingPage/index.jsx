@@ -11,7 +11,17 @@ export default () => (<Fragment>
     <Subheader>Never mix styles and business logic again!</Subheader>
   </Jumbotron>
   <Section>
-    <Header>Chameleon JS</Header>
-    <Subheader>Never byah!</Subheader>
+    <Header>Write Once, Style Everywhere</Header>
+    <Subheader>Your Components Will Style Themselves</Subheader>
+    Some code example
+  </Section>
+  <Section>
+    <Header>Chameleon JS is Modular</Header>
+    <Subheader>Separate your concerns</Subheader>
+    Talk about reducers
+  </Section>
+  <Section>
+    <Header>Chameleon JS is Hot</Header>
+    <Subheader>It uses advanced React</Subheader>
   </Section>
 </Fragment>);

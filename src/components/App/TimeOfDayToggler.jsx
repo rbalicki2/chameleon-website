@@ -9,7 +9,7 @@ type TimeOfDayTogglerProps = {|
 |};
 
 const UpperRightDiv = styled.div`
-  position: absolute;
+  position: fixed;
   top: 20px;
   right: 20px;
 `;

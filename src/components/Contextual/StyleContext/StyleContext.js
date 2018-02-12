@@ -36,7 +36,7 @@ export default class StyleContext {
     }
     return this.update({
       sectionDepth: 1,
-      textSizeMultiple: 1.3,
+      textSizeMultiple: 1.4,
     });
   }
 
@@ -69,7 +69,7 @@ export default class StyleContext {
     if (!this.state.sectionDepth) {
       throw new Error('Header-like components must be inside of sections');
     }
-    if (this.state.inHeading) {
+    if (this.state.inHeader) {
       throw new Error('Do not nest Header-like components');
     }
     return this.update({
@@ -143,7 +143,7 @@ export default class StyleContext {
     const fontSize = (21 - (panelDepth * 5) - (sectionDepth * 3)) * this.state.textSizeMultiple;
     const fontWeight = 600 - (panelDepth * 200) - (sectionDepth * 100);
     return `
-      margin-top: ${-1 * fontSize * 1.25}px;
+      margin-top: ${-1 * fontSize}px;
       margin-bottom: ${fontSize}px;
       line-height: 1.5em;
       text-transform: uppercase;
@@ -165,7 +165,10 @@ export default class StyleContext {
   get sectionMargins(): string {
     const { sectionDepth } = this.state;
     return `
-      margin: ${100 - (20 * sectionDepth)}px 0;
+      margin: 0 0 ${150 - (20 * sectionDepth)}px 0;
+      &:last-child {
+        margin-bottom: 0;
+      }
     `;
   }
 }
