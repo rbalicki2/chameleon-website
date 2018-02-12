@@ -13,6 +13,7 @@ export type StyleContextState = {
   inButton: boolean,
   inButtonGroup: boolean,
   textSizeMultiple: number,
+  headerSizeMultiple: number,
   gridType: ?GridType,
   flexContainerProperties: ?FlexContainerProperties,
   inGridItem: boolean,

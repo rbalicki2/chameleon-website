@@ -3,6 +3,7 @@ import { type TimeOfDay } from './TimeOfDay';
 import generateColorPalette, { type ColorPalette } from './ColorPalette';
 import { type StyleContextState } from './StyleContextState';
 import { type GridAction } from './Action';
+import { type GridItemProperties } from './Grid';
 
 type CssProperty = string;
 type CssDeclaration = string;
@@ -39,7 +40,8 @@ export default class StyleContext {
     }
     return this.update({
       sectionDepth: 1,
-      textSizeMultiple: 1.4,
+      textSizeMultiple: 1.2,
+      headerSizeMultiple: 1.4,
       sectionAlignment: 'center',
     });
   }
@@ -161,9 +163,29 @@ export default class StyleContext {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  getGridItemLayout(): string {
+  getGridItemLayout(gridItemProps: GridItemProperties): string {
     // TODO do this method
+    const {
+      order,
+      flexGrow,
+      flexShrink,
+      flexBasis,
+      flex,
+      alignSelf,
+    } = gridItemProps;
+    const orderString = order ? `order: ${order};` : '';
+    const flexGrowString = flexGrow ? `flex-grow: ${flexGrow};` : '';
+    const flexBasisString = flexBasis ? `flex-basis: ${flexBasis};` : '';
+    const flexShrinkString = flexShrink ? `flex-shrink: ${flexShrink}` : '';
+    const flexString = flex ? `flex: ${flex};` : '';
+    const alignSelfString = alignSelf ? `align-self: ${alignSelf};` : '';
     return `
+      ${orderString}
+      ${flexGrowString}
+      ${flexString}
+      ${flexShrinkString}
+      ${flexBasisString}
+      ${alignSelfString}
     `;
   }
 
@@ -201,8 +223,9 @@ export default class StyleContext {
 
   get paragraphProperties(): string {
     const { panelDepth, sectionDepth } = this.state;
-    const fontSize = (20 - (panelDepth * 4) - (sectionDepth * 2)) * this.state.textSizeMultiple;
+    const fontSize = (24 - (panelDepth * 4) - (sectionDepth * 2)) * this.state.textSizeMultiple;
     return `
+      font-weight: 300;
       font-size: ${fontSize}px;
       line-height: 1.5em;
       ${FONT_FAMILY}
@@ -217,7 +240,7 @@ export default class StyleContext {
 
   get headerTextProperties(): string {
     const { panelDepth, sectionDepth } = this.state;
-    const fontSize = (55 - (panelDepth * 10) - (sectionDepth * 5)) * this.state.textSizeMultiple;
+    const fontSize = (55 - (panelDepth * 10) - (sectionDepth * 5)) * this.state.headerSizeMultiple;
     const fontWeight = 900 - (panelDepth * 200) - (sectionDepth * 100);
     const lineSpacing = fontWeight >= 800
       ? 'letter-spacing: 1px;'
@@ -243,7 +266,7 @@ export default class StyleContext {
 
   get subHeaderTextProperties(): string {
     const { panelDepth, sectionDepth } = this.state;
-    const fontSize = (22 - (panelDepth * 5) - (sectionDepth * 1)) * this.state.textSizeMultiple;
+    const fontSize = (22 - (panelDepth * 5) - (sectionDepth * 1)) * this.state.headerSizeMultiple;
     const fontWeight = 200;
     return `
       margin-top: ${-1 * fontSize}px;
@@ -307,8 +330,8 @@ export default class StyleContext {
 
   get buttonSize(): string {
     const { panelDepth, sectionDepth } = this.state;
-    const fontSize = (21 - (panelDepth * 5) - (sectionDepth * 3)) * this.state.textSizeMultiple;
-    const padding = (21 - (panelDepth * 5) - (sectionDepth * 3)) * this.state.textSizeMultiple;
+    const fontSize = (21 - (panelDepth * 5) - (sectionDepth * 3)) * this.state.headerSizeMultiple;
+    const padding = (19 - (panelDepth * 5) - (sectionDepth * 3)) * this.state.headerSizeMultiple;
     return `
       font-size: ${fontSize}px;
       padding: ${padding}px;

@@ -11,6 +11,7 @@ export default new StyleContext({
   inButton: false,
   inButtonGroup: false,
   textSizeMultiple: 1,
+  headerSizeMultiple: 1,
   gridType: undefined,
   inGridItem: false,
   flexContainerProperties: undefined,

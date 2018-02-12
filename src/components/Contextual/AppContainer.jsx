@@ -10,7 +10,7 @@ type AppContainerProps = {
 // TODO get top margin from context?
 const Container = styled.div`
   width: 100%;
-  max-width: 768px;
+  max-width: 970px;
   margin: 80px auto 0;
 `;
 

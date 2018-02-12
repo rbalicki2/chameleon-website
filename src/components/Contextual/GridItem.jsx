@@ -12,18 +12,19 @@ const GridItem = styled.div`
   `}
 `;
 
-type GridItemProps = {|
+type GridItemProps = {
   children: Node,
   gridItemProperties: GridItemProperties,
-|};
+};
 
 export default ({
   children,
-  gridItemProperties,
+  gridItemProperties = {},
+  ...rest
 }: GridItemProps) => (
   <EnterGridItem>
     <ContextProvider>{context =>
-      (<GridItem context={context} gridItemProps={gridItemProperties}>
+      (<GridItem context={context} gridItemProps={gridItemProperties} {...rest}>
         { children }
       </GridItem>)
     }</ContextProvider>

@@ -20,10 +20,10 @@ export type FlexContainerProperties = {|
 |};
 
 export type GridItemProperties = {|
-  order: number,
-  flexGrow: number,
-  flexShrink: number,
-  flexBasis: any,
-  flex: any,
-  alignSelf: 'flex-start' | 'flex-end',
+  order?: number,
+  flexGrow?: number,
+  flexShrink?: number,
+  flexBasis?: any,
+  flex?: any,
+  alignSelf?: 'flex-start' | 'flex-end',
 |};
