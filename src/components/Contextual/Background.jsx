@@ -11,7 +11,7 @@ const Bg = styled.div`
   bottom: 0;
   right: 0;
   z-index: -1;
-  transition: ${({ context }) => context.getTransition('opacity', 'linear')};
+  transition: ${({ context }) => context.getTransition('opacity')};
   ${({ bg }) => bg}
   ${({ opacity }) => opacity}
   background-blend-mode: hue;
@@ -23,7 +23,7 @@ const Bg = styled.div`
 // non-active background gradient
 const bgByTimeOfDay = {
   DAY: `
-    background: linear-gradient(135deg, #fdfc52, #63db2c);
+    background: linear-gradient(135deg, #fdfc52, #98E448);
   `,
   NIGHT: `
     background: linear-gradient(135deg, #041197, #3A14A4);

@@ -2,10 +2,13 @@
 import { type TimeOfDay } from './TimeOfDay';
 import generateColorPalette, { type ColorPalette } from './ColorPalette';
 import { type StyleContextState } from './StyleContextState';
+import { type GridAction } from './Action';
 
 type CssProperty = string;
 type CssDeclaration = string;
 type CssTimingFunction = string;
+
+const FONT_FAMILY = 'font-family: \'Muli\';';
 
 export default class StyleContext {
   // TODO rename this to .state
@@ -37,6 +40,7 @@ export default class StyleContext {
     return this.update({
       sectionDepth: 1,
       textSizeMultiple: 1.4,
+      sectionAlignment: 'center',
     });
   }
 
@@ -77,8 +81,68 @@ export default class StyleContext {
     });
   }
 
+  enterButton(): StyleContext {
+    if (this.state.inButton) {
+      throw new Error('Do not nest <Button /> components');
+    }
+    // TODO don't nest other stuff in buttons, too
+    return this.update({
+      inButton: true,
+    });
+  }
+
+  enterButtonGroup(): StyleContext {
+    if (this.state.inButtonGroup) {
+      throw new Error('Do not nest <ButtonGroup /> components');
+    }
+    return this.update({
+      inButtonGroup: true,
+    });
+  }
+
+  enterGrid(action: GridAction): StyleContext {
+    if (action.gridType === 'FLEXBOX') {
+      return this.update({
+        gridType: action.gridType,
+        flexContainerProperties: action.flexContainerProperties,
+      });
+    }
+    // N.B. this messes up formatting, but it should be uncommented:
+    // (action: empty);
+    throw new Error('Non-flexbox grid not implemented');
+  }
+
   get timeOfDay(): TimeOfDay {
     return this.state.timeOfDay;
+  }
+
+  get gridLayout(): string {
+    if (this.state.gridType === 'FLEXBOX' && this.state.flexContainerProperties) {
+      // LOL @ eslint... spacing
+      const {
+        flexDirection,
+        flexWrap,
+        justifyContent,
+        alignContent,
+        alignItems,
+      } = this.state.flexContainerProperties;
+
+      const flexDirectionString = flexDirection ? `flex-direction: ${flexDirection};` : '';
+      const flexWrapString = flexWrap ? `flex-wrap: ${flexWrap};` : '';
+      const justifyContentString = justifyContent ? `justify-content: ${justifyContent};` : '';
+      const alignContentString = alignContent ? `align-content: ${alignContent};` : '';
+      const alignItemsString = alignItems ? `align-items: ${alignItems};` : '';
+
+      return `
+        display: flex;
+        ${flexDirectionString}
+        ${flexWrapString}
+        ${justifyContentString}
+        ${alignContentString}
+        ${alignItemsString}
+      `;
+    }
+    throw new Error('Unhandled gridType');
   }
 
   get colorPalette(): ColorPalette {
@@ -88,9 +152,10 @@ export default class StyleContext {
   // eslint-disable-next-line class-methods-use-this
   getTransition(
     cssProperty: CssProperty = 'all',
+    timing: number = 400,
     timingFunction: CssTimingFunction = 'ease-in-out'
   ): CssDeclaration {
-    return `${cssProperty} 0.4s ${timingFunction}`;
+    return `${cssProperty} ${timing}ms ${timingFunction}`;
   }
 
   get panelSpacing(): string {
@@ -123,7 +188,7 @@ export default class StyleContext {
     return `
       font-size: ${fontSize}px;
       line-height: 1.5em;
-      font-family: 'Muli';
+      ${FONT_FAMILY}
       font-weight: ${fontWeight};
       text-align: ${this.isInPanel ? 'left' : 'center'};
       ${lineSpacing}
@@ -140,15 +205,15 @@ export default class StyleContext {
 
   get subHeaderTextProperties(): string {
     const { panelDepth, sectionDepth } = this.state;
-    const fontSize = (21 - (panelDepth * 5) - (sectionDepth * 3)) * this.state.textSizeMultiple;
+    const fontSize = (22 - (panelDepth * 5) - (sectionDepth * 1)) * this.state.textSizeMultiple;
     const fontWeight = 600 - (panelDepth * 200) - (sectionDepth * 100);
     return `
       margin-top: ${-1 * fontSize}px;
-      margin-bottom: ${fontSize}px;
+      margin-bottom: ${2 * fontSize}px;
       line-height: 1.5em;
       text-transform: uppercase;
       letter-spacing: 1px;
-      font-family: 'Muli';
+      ${FONT_FAMILY}
       font-size: ${fontSize}px;
       text-align: ${this.isInPanel ? 'left' : 'center'};
       font-weight: ${fontWeight};
@@ -168,6 +233,64 @@ export default class StyleContext {
       margin: 0 0 ${150 - (20 * sectionDepth)}px 0;
       &:last-child {
         margin-bottom: 0;
+      }
+      text-align: ${this.state.sectionAlignment};
+    `;
+  }
+
+  getButtonColor(isPrimary: boolean): string {
+    const fgColor = isPrimary
+      ? this.colorPalette.fgTitle
+      : this.colorPalette.fgSharpContrast;
+    const bgColor = isPrimary
+      ? this.colorPalette.fgContrast
+      : this.colorPalette.increaseContrastTransparent;
+    const bgSaturated = isPrimary
+      ? this.colorPalette.fgContrastSaturated
+      : this.colorPalette.increaseContrastTransparent2;
+    const borderSize = this.state.panelDepth ? '1px' : '3px';
+
+    return `
+      color: ${fgColor};
+      background-color: ${bgColor};
+      border: ${borderSize} solid ${fgColor};
+      box-shadow: ${this.colorPalette.headerBoxShadow};
+      text-shadow: ${this.colorPalette.subHeaderBoxShadow};
+      transform: none;
+      transition: ${this.getTransition('all', 100)};
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: ${this.colorPalette.elongatedHeaderBoxShadow};
+        background-color: ${bgSaturated};
+      }
+    `;
+  }
+
+  get buttonSize(): string {
+    const { panelDepth, sectionDepth } = this.state;
+    const fontSize = (21 - (panelDepth * 5) - (sectionDepth * 3)) * this.state.textSizeMultiple;
+    const padding = (21 - (panelDepth * 5) - (sectionDepth * 3)) * this.state.textSizeMultiple;
+    return `
+      font-size: ${fontSize}px;
+      padding: ${padding}px;
+      ${FONT_FAMILY}
+    `;
+  }
+
+  get buttonGroupStyles(): string {
+    const { panelDepth, sectionDepth } = this.state;
+    const padding = 36 - (sectionDepth * 4) - (panelDepth * 8);
+    return `
+      & > * {
+        margin-right: ${padding}px;
+        margin-left: ${padding}px;
+        &:first-child {
+          margin-left: 0;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
       }
     `;
   }

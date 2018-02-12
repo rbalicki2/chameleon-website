@@ -7,5 +7,10 @@ export default new StyleContext({
   timeOfDay: 'DAY',
   inAppContainer: false,
   inHeader: false,
+  inButton: false,
+  inButtonGroup: false,
   textSizeMultiple: 1,
+  gridType: undefined,
+  flexContainerProperties: undefined,
+  sectionAlignment: 'left',
 });
