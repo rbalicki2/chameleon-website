@@ -320,7 +320,7 @@ export default class StyleContext {
     const { panelDepth, sectionDepth } = this.state;
     const padding = 36 - (sectionDepth * 4) - (panelDepth * 8);
     return `
-      margin-bottom: ${padding}px;
+      margin: ${padding * 2}px 0;
       & > * {
         margin-right: ${padding}px;
         margin-left: ${padding}px;
