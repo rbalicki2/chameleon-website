@@ -4,6 +4,7 @@ import generateColorPalette, { type ColorPalette } from './ColorPalette';
 import { type StyleContextState } from './StyleContextState';
 import { type GridAction } from './Action';
 import { type GridItemProperties } from './Grid';
+import { JUMBOTRON_FONT_ROOT, FONT_SIZES, SUBHEADER_OFFSET, PARAGRAPH_OFFSET } from './Sizes';
 
 type CssProperty = string;
 type CssDeclaration = string;
@@ -39,10 +40,9 @@ export default class StyleContext {
       throw new Error('Do not nest <Jumbotron /> components inside <Panel /> components');
     }
     return this.update({
-      sectionDepth: 1,
-      textSizeMultiple: 1.2,
-      headerSizeMultiple: 1.4,
+      fontSizeRoot: JUMBOTRON_FONT_ROOT,
       sectionAlignment: 'center',
+      sectionDepth: 1,
     });
   }
 
@@ -222,8 +222,8 @@ export default class StyleContext {
   }
 
   get paragraphProperties(): string {
-    const { panelDepth, sectionDepth } = this.state;
-    const fontSize = (24 - (panelDepth * 4) - (sectionDepth * 2)) * this.state.textSizeMultiple;
+    const fontSize = this.getFontSize(PARAGRAPH_OFFSET);
+
     return `
       font-weight: 300;
       font-size: ${fontSize}px;
@@ -240,7 +240,7 @@ export default class StyleContext {
 
   get headerTextProperties(): string {
     const { panelDepth, sectionDepth } = this.state;
-    const fontSize = (55 - (panelDepth * 10) - (sectionDepth * 5)) * this.state.headerSizeMultiple;
+    const fontSize = FONT_SIZES[this.state.fontSizeRoot + sectionDepth + (2 * panelDepth)];
     const fontWeight = 900 - (panelDepth * 200) - (sectionDepth * 100);
     const lineSpacing = fontWeight >= 800
       ? 'letter-spacing: 1px;'
@@ -255,18 +255,21 @@ export default class StyleContext {
       ${lineSpacing}
       margin-bottom: ${fontSize / 3}px;
       text-shadow: ${this.colorPalette.headerBoxShadow};
-    `;
-  }
-
-  get headerColor(): string {
-    return `
       color: ${this.colorPalette.fgTitle};
     `;
   }
 
+  getFontSize(offset: number): number {
+    return FONT_SIZES[
+      this.state.fontSizeRoot
+        + this.state.sectionDepth
+        + (2 * this.state.panelDepth)
+        + offset
+    ];
+  }
+
   get subHeaderTextProperties(): string {
-    const { panelDepth, sectionDepth } = this.state;
-    const fontSize = (22 - (panelDepth * 5) - (sectionDepth * 1)) * this.state.headerSizeMultiple;
+    const fontSize = this.getFontSize(SUBHEADER_OFFSET);
     const fontWeight = 200;
     return `
       margin-top: ${-1 * fontSize}px;
@@ -329,9 +332,9 @@ export default class StyleContext {
   }
 
   get buttonSize(): string {
-    const { panelDepth, sectionDepth } = this.state;
-    const fontSize = (21 - (panelDepth * 5) - (sectionDepth * 3)) * this.state.headerSizeMultiple;
-    const padding = (19 - (panelDepth * 5) - (sectionDepth * 3)) * this.state.headerSizeMultiple;
+    const fontSize = this.getFontSize(PARAGRAPH_OFFSET);
+    // const padding = (19 - (panelDepth * 5) - (sectionDepth * 3)) * this.state.headerSizeMultiple;
+    const padding = 10;
     return `
       font-size: ${fontSize}px;
       padding: ${padding}px;

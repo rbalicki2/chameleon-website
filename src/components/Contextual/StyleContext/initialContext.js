@@ -1,5 +1,6 @@
 // @flow
 import StyleContext from './StyleContext';
+import { BASE_FONT_ROOT } from './Sizes';
 
 export default new StyleContext({
   sectionDepth: 0,
@@ -10,8 +11,7 @@ export default new StyleContext({
   inHeader: false,
   inButton: false,
   inButtonGroup: false,
-  textSizeMultiple: 1,
-  headerSizeMultiple: 1,
+  fontSizeRoot: BASE_FONT_ROOT,
   gridType: undefined,
   inGridItem: false,
   flexContainerProperties: undefined,
