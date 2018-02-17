@@ -9,8 +9,10 @@ const COLOR_ARRAY_LENGTH = 10;
 
 export type ColorPalette = {|
   backgroundColor: TinyColor,
+
   actionColor: TinyColor,
   actionColorContrast: TinyColor,
+  actionColorShadowColor: TinyColor,
 
   brandColor: TinyColor,
 
@@ -55,6 +57,7 @@ const getColorPaletteFromBase = (bc: BaseColors): ColorPalette => {
     backgroundColor,
     mostExtremeTextLightness,
     mostExtremeBackgroundDarkness,
+    actionColor,
   } = bc;
   const utilityTextGrays = getColorArray(
     backgroundColor,
@@ -68,10 +71,16 @@ const getColorPaletteFromBase = (bc: BaseColors): ColorPalette => {
     true
   );
 
+  const fn = backgroundColor.isLight()
+    ? 'darken'
+    : 'lighten';
+  // console.log(actionColor.clone()[fn](25));
+
   return {
     backgroundColor: bc.backgroundColor,
     actionColor: bc.actionColor,
     actionColorContrast: tinycolor('white'),
+    actionColorShadowColor: actionColor.clone()[fn](5).setAlpha(0.3),
     utilityTextGrays,
     utilityBackgroundColors,
     brandColor: bc.brandColor,

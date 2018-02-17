@@ -5,6 +5,7 @@ import { type StyleContextState } from './StyleContextState';
 import { type GridAction } from './Action';
 import { type GridItemProperties } from './Grid';
 import { JUMBOTRON_FONT_ROOT, FONT_SIZES, SUBHEADER_OFFSET, PARAGRAPH_OFFSET } from './Sizes';
+import { type TinyColor } from './ColorPalette/baseColors';
 
 type CssProperty = string;
 type CssDeclaration = string;
@@ -210,8 +211,19 @@ export default class StyleContext {
     blur: number = 4,
     spread: number = 0
   ): CssProperty {
-    const color = this.colorPalette.utilityBackgroundColors[colorOffset].toHexString();
-    return `${h}px ${v}px ${blur}px ${spread}px ${color}`;
+    const color = this.colorPalette.utilityBackgroundColors[colorOffset];
+    return this.getBoxShadowFromColor(color, h, v, blur, spread);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  getBoxShadowFromColor(
+    color: TinyColor,
+    h: number = 0,
+    v: number = 2,
+    blur: number = 4,
+    spread: number = 0
+  ): CssProperty {
+    return `${h}px ${v}px ${blur}px ${spread}px ${color.toHex8String()}`;
   }
 
   getTextShadow(
@@ -220,7 +232,7 @@ export default class StyleContext {
     v: number = 2,
     blur: number = 4
   ): CssProperty {
-    const color = this.colorPalette.utilityTextGrays[colorOffset].toHexString();
+    const color = this.colorPalette.utilityTextGrays[colorOffset].toHex8String();
     return `${h}px ${v}px ${blur}px ${color}`;
   }
 
@@ -230,8 +242,8 @@ export default class StyleContext {
     return `
       padding: ${50 - (this.state.panelDepth * 10)}px;
       margin-bottom: ${25 - (this.state.panelDepth * 5)}px;
-      background-color: ${panelColors[1 + panelDepth].toHexString()};
-      border: 1px solid ${panelColors[3 + panelDepth].toHexString()};
+      background-color: ${panelColors[1 + panelDepth].toHex8String()};
+      border: 1px solid ${panelColors[3 + panelDepth].toHex8String()};
       box-shadow: ${this.getBoxShadow(3)};
     `;
   }
@@ -249,14 +261,14 @@ export default class StyleContext {
       line-height: 1.5em;
       ${FONT_FAMILY}
       margin-bottom: ${fontSize}px;
-      color: ${this.colorPalette.utilityTextGrays[3].toHexString()};
+      color: ${this.colorPalette.utilityTextGrays[3].toHex8String()};
 
       &:last-child {
         margin-bottom: 0;
       }
 
       a {
-        color: ${this.colorPalette.actionColor.toHexString()};
+        color: ${this.colorPalette.actionColor.toHex8String()};
         text-decoration: none;
       }
     `;
@@ -279,7 +291,7 @@ export default class StyleContext {
       ${lineSpacing}
       margin-bottom: ${fontSize / 3}px;
       text-shadow: ${this.getTextShadow(9)};
-      color: ${this.colorPalette.brandColor.toHexString()};
+      color: ${this.colorPalette.brandColor.toHex8String()};
     `;
   }
 
@@ -305,7 +317,7 @@ export default class StyleContext {
       font-size: ${fontSize}px;
       text-align: ${this.isInPanel ? 'left' : 'center'};
       font-weight: ${fontWeight};
-      color: ${this.colorPalette.utilityTextGrays[5].toHexString()};
+      color: ${this.colorPalette.utilityTextGrays[5].toHex8String()};
     `;
   }
 
@@ -331,12 +343,15 @@ export default class StyleContext {
     const borderSize = this.state.panelDepth ? '1px' : '3px';
     const fontSize = this.getFontSize(PARAGRAPH_OFFSET);
     const padding = 10;
+    const boxShadow = this.getBoxShadowFromColor(
+      this.colorPalette.actionColorShadowColor
+    );
 
     return `
       color: ${fgColor};
       background-color: ${bgColor};
-      border: ${borderSize} solid ${borderColor.toHexString()};
-      box-shadow: ${this.getBoxShadow(6)};
+      border: ${borderSize} solid ${borderColor.toHex8String()};
+      box-shadow: ${boxShadow};
       transform: none;
       transition: ${this.getTransition('all', 100)};
       font-size: ${fontSize}px;

@@ -14,7 +14,7 @@ const Bg = styled.div`
   transition: ${({ context }) => context.getTransition('opacity')};
   ${({ opacity }) => opacity}
   ${({ context }) => `
-    background-color: ${context.colorPalette.backgroundColor.toHexString()};
+    background-color: ${context.colorPalette.backgroundColor.toHex8String()};
   `}
   background-blend-mode: hue;
 `;
