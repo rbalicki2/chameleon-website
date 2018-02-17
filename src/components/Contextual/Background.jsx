@@ -23,7 +23,7 @@ const Bg = styled.div`
 // non-active background gradient
 const bgByTimeOfDay = {
   DAY: `
-    background: linear-gradient(135deg, #fdfc52, #98E448);
+    background: linear-gradient(135deg, #cff415, #43BB4F);
   `,
   NIGHT: `
     background: linear-gradient(135deg, #041197, #3A14A4);
