@@ -12,8 +12,7 @@ const Panel = styled.div`
   width: 100%;
   box-sizing: border-box;
   ${({ context }) => `
-    ${context.panelSpacing}
-    ${context.panelColoring}
+    ${context.panelProperties}
     transition: ${context.getTransition('all')};
   `}
 `;

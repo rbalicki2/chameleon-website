@@ -12,23 +12,12 @@ const Bg = styled.div`
   right: 0;
   z-index: -1;
   transition: ${({ context }) => context.getTransition('opacity')};
-  ${({ bg }) => bg}
   ${({ opacity }) => opacity}
+  ${({ context }) => `
+    background-color: ${context.colorPalette.backgroundColor.toHexString()};
+  `}
   background-blend-mode: hue;
 `;
-
-// NOTE: we should get bg from context.colorPalette, but since we're actually
-// rendering both and transitioning them via opacity, it's way more convenient
-// to have it here, because otherwise we wouldn't be able to access the
-// non-active background gradient
-const bgByTimeOfDay = {
-  DAY: `
-    background: linear-gradient(135deg, #cff415, #43BB4F);
-  `,
-  NIGHT: `
-    background: linear-gradient(135deg, #041197, #3A14A4);
-  `,
-};
 
 const opacityBySelected = selected => `opacity: ${selected ? 1 : 0};`;
 
@@ -36,14 +25,13 @@ export default () => (<ContextProvider>{(context: StyleContext) => {
   const { timeOfDay } = context;
   return (<div>
     <Bg
-      opacity={opacityBySelected(timeOfDay === 'DAY')}
-      bg={bgByTimeOfDay.DAY}
+      opacity={opacityBySelected(timeOfDay === 'NIGHT')}
       context={context}
     />
     <Bg
-      opacity={opacityBySelected(timeOfDay === 'NIGHT')}
-      bg={bgByTimeOfDay.NIGHT}
+      opacity={opacityBySelected(timeOfDay === 'DAY')}
       context={context}
     />
+
   </div>);
 }}</ContextProvider>);

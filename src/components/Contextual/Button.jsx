@@ -7,8 +7,7 @@ import { EnterButton } from './Updaters';
 
 const Button = styled.a`
   ${({ context, primary }) => `
-    ${context.getButtonColor(primary)}
-    ${context.buttonSize}
+    ${context.getButtonProperties(primary)}
   `}
   cursor: pointer;
   text-decoration: none;

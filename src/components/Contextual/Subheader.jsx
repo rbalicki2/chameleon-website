@@ -8,7 +8,6 @@ import { EnterHeader } from './Updaters';
 const Subheader = styled.div`
   ${({ context }) => `
     ${context.subHeaderTextProperties}
-    ${context.subHeaderColor}
   `}
 `;
 

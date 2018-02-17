@@ -189,6 +189,7 @@ export default class StyleContext {
     `;
   }
 
+  // TODO memoize
   get colorPalette(): ColorPalette {
     return generateColorPalette(this.state);
   }
@@ -202,18 +203,36 @@ export default class StyleContext {
     return `${cssProperty} ${timing}ms ${timingFunction}`;
   }
 
-  get panelSpacing(): string {
+  getBoxShadow(
+    colorOffset: number,
+    h: number = 0,
+    v: number = 2,
+    blur: number = 4,
+    spread: number = 0
+  ): CssProperty {
+    const color = this.colorPalette.utilityBackgroundColors[colorOffset].toHexString();
+    return `${h}px ${v}px ${blur}px ${spread}px ${color}`;
+  }
+
+  getTextShadow(
+    colorOffset: number,
+    h: number = 0,
+    v: number = 2,
+    blur: number = 4
+  ): CssProperty {
+    const color = this.colorPalette.utilityTextGrays[colorOffset].toHexString();
+    return `${h}px ${v}px ${blur}px ${color}`;
+  }
+
+  get panelProperties(): string {
+    const { panelDepth } = this.state;
+    const panelColors = this.colorPalette.utilityBackgroundColors;
     return `
       padding: ${50 - (this.state.panelDepth * 10)}px;
       margin-bottom: ${25 - (this.state.panelDepth * 5)}px;
-    `;
-  }
-
-  get panelColoring(): string {
-    return `
-      border: 1px solid ${this.colorPalette.panelBorder};
-      background-color: ${this.colorPalette.panelBg};
-      box-shadow: ${this.colorPalette.componentBoxShadow};
+      background-color: ${panelColors[1 + panelDepth].toHexString()};
+      border: 1px solid ${panelColors[3 + panelDepth].toHexString()};
+      box-shadow: ${this.getBoxShadow(3)};
     `;
   }
 
@@ -230,10 +249,15 @@ export default class StyleContext {
       line-height: 1.5em;
       ${FONT_FAMILY}
       margin-bottom: ${fontSize}px;
-      color: ${this.colorPalette.fgBodyText};
+      color: ${this.colorPalette.utilityTextGrays[3].toHexString()};
 
       &:last-child {
         margin-bottom: 0;
+      }
+
+      a {
+        color: ${this.colorPalette.actionColor.toHexString()};
+        text-decoration: none;
       }
     `;
   }
@@ -254,8 +278,8 @@ export default class StyleContext {
       text-align: ${this.isInPanel ? 'left' : 'center'};
       ${lineSpacing}
       margin-bottom: ${fontSize / 3}px;
-      text-shadow: ${this.colorPalette.headerBoxShadow};
-      color: ${this.colorPalette.fgTitle};
+      text-shadow: ${this.getTextShadow(9)};
+      color: ${this.colorPalette.brandColor.toHexString()};
     `;
   }
 
@@ -281,13 +305,7 @@ export default class StyleContext {
       font-size: ${fontSize}px;
       text-align: ${this.isInPanel ? 'left' : 'center'};
       font-weight: ${fontWeight};
-      text-shadow: ${this.colorPalette.subHeaderBoxShadow};
-    `;
-  }
-
-  get subHeaderColor(): string {
-    return `
-      color: ${this.colorPalette.fgSubtitle};
+      color: ${this.colorPalette.utilityTextGrays[5].toHexString()};
     `;
   }
 
@@ -302,40 +320,25 @@ export default class StyleContext {
     `;
   }
 
-  getButtonColor(isPrimary: boolean): string {
+  getButtonProperties(isPrimary: boolean): string {
     const fgColor = isPrimary
-      ? this.colorPalette.fgTitle
-      : this.colorPalette.fgSharpContrast;
+      ? this.colorPalette.actionColorContrast
+      : this.colorPalette.actionColor;
     const bgColor = isPrimary
-      ? this.colorPalette.fgContrast
-      : this.colorPalette.increaseContrastTransparent;
-    const bgSaturated = isPrimary
-      ? this.colorPalette.fgContrastSaturated
-      : this.colorPalette.increaseContrastTransparent2;
+      ? this.colorPalette.actionColor
+      : this.colorPalette.actionColorContrast;
+    const borderColor = this.colorPalette.actionColor;
     const borderSize = this.state.panelDepth ? '1px' : '3px';
+    const fontSize = this.getFontSize(PARAGRAPH_OFFSET);
+    const padding = 10;
 
     return `
       color: ${fgColor};
       background-color: ${bgColor};
-      border: ${borderSize} solid ${fgColor};
-      box-shadow: ${this.colorPalette.headerBoxShadow};
-      text-shadow: ${this.colorPalette.subHeaderBoxShadow};
+      border: ${borderSize} solid ${borderColor.toHexString()};
+      box-shadow: ${this.getBoxShadow(6)};
       transform: none;
       transition: ${this.getTransition('all', 100)};
-
-      &:hover {
-        transform: translateY(-1px);
-        box-shadow: ${this.colorPalette.elongatedHeaderBoxShadow};
-        background-color: ${bgSaturated};
-      }
-    `;
-  }
-
-  get buttonSize(): string {
-    const fontSize = this.getFontSize(PARAGRAPH_OFFSET);
-    // const padding = (19 - (panelDepth * 5) - (sectionDepth * 3)) * this.state.headerSizeMultiple;
-    const padding = 10;
-    return `
       font-size: ${fontSize}px;
       padding: ${padding}px;
       ${FONT_FAMILY}
