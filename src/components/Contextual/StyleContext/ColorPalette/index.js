@@ -71,14 +71,15 @@ const getColorPaletteFromBase = (bc: BaseColors): ColorPalette => {
     true
   );
 
-  const fn = backgroundColor.isLight()
+  const isLight = backgroundColor.isLight();
+  const fn = isLight
     ? 'darken'
     : 'lighten';
 
   return {
     backgroundColor: bc.backgroundColor,
     actionColor: bc.actionColor,
-    actionColorContrast: tinycolor('white'),
+    actionColorContrast: isLight ? tinycolor('white') : backgroundColor,
     actionColorShadowColor: actionColor.clone()[fn](5).setAlpha(0.3),
     utilityTextGrays,
     utilityBackgroundColors,

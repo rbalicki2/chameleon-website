@@ -20,9 +20,9 @@ export const DayColors: BaseColors = {
 };
 
 export const NightColors: BaseColors = {
-  backgroundColor: tinycolor('blue'),
-  actionColor: tinycolor('#319E4A'),
-  brandColor: tinycolor('#ec9213'),
+  backgroundColor: tinycolor('#1f1736'),
+  actionColor: tinycolor('#F4E02D'),
+  brandColor: tinycolor('#DB85BA'),
   mostExtremeTextLightness: 0.47,
   mostExtremeBackgroundDarkness: 0.47,
 };
