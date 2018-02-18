@@ -12,7 +12,7 @@ export type BaseColors = {|
 |};
 
 export const DayColors: BaseColors = {
-  backgroundColor: tinycolor('#fdf4b5'), // yellow
+  backgroundColor: tinycolor('#fcfae8'), // yellow
   actionColor: tinycolor('#0a7623'),
   brandColor: tinycolor('#ec9213'),
   mostExtremeTextLightness: 0.47,

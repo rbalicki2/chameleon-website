@@ -4,8 +4,15 @@ import generateColorPalette, { type ColorPalette } from './ColorPalette';
 import { type StyleContextState } from './StyleContextState';
 import { type GridAction } from './Action';
 import { type GridItemProperties } from './Grid';
-import { JUMBOTRON_FONT_ROOT, FONT_SIZES, SUBHEADER_OFFSET, PARAGRAPH_OFFSET } from './Sizes';
+import {
+  JUMBOTRON_FONT_ROOT,
+  FONT_SIZES,
+  SUBHEADER_OFFSET,
+  PARAGRAPH_OFFSET,
+  COMPONENT_PADDINGS,
+} from './Sizes';
 import { type TinyColor } from './ColorPalette/baseColors';
+import getMediaQuery from './getMediaQuery';
 
 type CssProperty = string;
 type CssDeclaration = string;
@@ -13,6 +20,7 @@ type CssTimingFunction = string;
 
 const FONT_FAMILY = 'font-family: \'Muli\';';
 
+// TODO memoize every method
 export default class StyleContext {
   // TODO rename this to .state
   state: StyleContextState;
@@ -136,7 +144,6 @@ export default class StyleContext {
 
   get gridLayout(): string {
     if (this.state.gridType === 'FLEXBOX' && this.state.flexContainerProperties) {
-      // LOL @ eslint... spacing
       const {
         flexDirection,
         flexWrap,
@@ -190,7 +197,6 @@ export default class StyleContext {
     `;
   }
 
-  // TODO memoize
   get colorPalette(): ColorPalette {
     return generateColorPalette(this.state);
   }
@@ -280,7 +286,7 @@ export default class StyleContext {
 
   get headerTextProperties(): string {
     const { panelDepth, sectionDepth } = this.state;
-    const fontSize = FONT_SIZES[this.state.fontSizeRoot + sectionDepth + (2 * panelDepth)];
+    const fontSize = this.getFontSize(0);
     const fontWeight = 900 - (panelDepth * 200) - (sectionDepth * 100);
     const lineSpacing = fontWeight >= 800
       ? 'letter-spacing: 1px;'
@@ -288,12 +294,12 @@ export default class StyleContext {
 
     return `
       font-size: ${fontSize}px;
-      line-height: 1.5em;
+      line-height: 1.3em;
       ${FONT_FAMILY}
       font-weight: ${fontWeight};
       text-align: ${this.isInPanel ? 'left' : 'center'};
       ${lineSpacing}
-      margin-bottom: ${fontSize / 3}px;
+      margin-bottom: ${this.headerMargin}px;
       text-shadow: ${this.getTextShadow(9)};
       color: ${this.colorPalette.brandColor.toHex8String()};
     `;
@@ -308,13 +314,17 @@ export default class StyleContext {
     ];
   }
 
+  get headerMargin() {
+    return this.getComponentPadding(5);
+  }
+
   get subHeaderTextProperties(): string {
+    // margin-top must match margin-bottom in headerTextProperties
     const fontSize = this.getFontSize(SUBHEADER_OFFSET);
     const fontWeight = 200;
     return `
-      margin-top: ${-1 * fontSize}px;
-      margin-bottom: ${1.5 * fontSize}px;
-      line-height: 1.5em;
+      margin-top: ${-1 * this.headerMargin}px;
+      margin-bottom: ${this.headerMargin}px;
       text-transform: uppercase;
       letter-spacing: 1px;
       ${FONT_FAMILY}
@@ -325,14 +335,23 @@ export default class StyleContext {
     `;
   }
 
-  get sectionMargins(): string {
-    const { sectionDepth } = this.state;
+  getComponentPadding(offset: number): number {
+    const { sectionDepth, panelDepth } = this.state;
+    return COMPONENT_PADDINGS[offset + sectionDepth + (2 * panelDepth)];
+  }
+
+  get sectionProperties(): string {
+    const bottomMargin = this.getComponentPadding(3);
+    const bottomMarginDesktop = this.getComponentPadding(0);
     return `
-      margin: 0 0 ${150 - (20 * sectionDepth)}px 0;
+      margin-bottom: ${bottomMargin}px;
       &:last-child {
         margin-bottom: 0;
       }
       text-align: ${this.state.sectionAlignment};
+      @media ${getMediaQuery('DESKTOP')} {
+        margin-bottom: ${bottomMarginDesktop}px;
+      }
     `;
   }
 

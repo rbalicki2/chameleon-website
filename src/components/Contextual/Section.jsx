@@ -7,7 +7,7 @@ import { ContextProvider } from './StyleContext';
 
 const Section = styled.div`
   ${({ context }) => `
-    ${context.sectionMargins}
+    ${context.sectionProperties}
   `}
 `;
 
