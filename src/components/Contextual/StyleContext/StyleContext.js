@@ -331,7 +331,7 @@ export default class StyleContext {
 
   get subHeaderTextProperties(): string {
     // margin-top must match margin-bottom in headerTextProperties
-    const fontSize = this.getFontSize(SUBHEADER_OFFSET);
+    const fontSize = this.getFontSize(SUBHEADER_OFFSET + (2 * this.state.panelDepth));
     const fontWeight = 200;
     return `
       margin-top: ${-1 * this.headerMargin}px;
