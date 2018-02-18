@@ -18,7 +18,7 @@ const writeLessCodeGridProps = {
 };
 
 const writeLessCodeGridItemProps = {
-  flex: 1,
+  flex: '1 0 50%',
 };
 
 export default () => (<Fragment>
@@ -45,7 +45,7 @@ export default () => (<Fragment>
     <Subheader>No more styling information in your views</Subheader>
     <Section>
       <Grid gridType="FLEXBOX" flexContainerProperties={writeLessCodeGridProps}>
-        <GridItem gridItemProperties={writeLessCodeGridItemProps} style={{ width: '50%' }}>
+        <GridItem gridItemProperties={writeLessCodeGridItemProps} style={{ minWidth: 400 }}>
           <Panel>
             <Paragraph>
               Chameleon JS is a toolkit for building components that style themselves.
@@ -66,7 +66,14 @@ export default () => (<Fragment>
             </Paragraph>
           </Panel>
         </GridItem>
-        <GridItem gridItemProperties={writeLessCodeGridItemProps}>2</GridItem>
+        <GridItem gridItemProperties={writeLessCodeGridItemProps} style={{ minWidth: 400 }}>
+          <Panel>
+            <Paragraph>Maybe this is different if I have a bunch of shit yeah bunch
+              bunch of shit shit shit shi si asdfasdf adf adf asdf asdf asdf asd
+              bunch asdfa sdf asdfaf as
+            </Paragraph>
+          </Panel>
+        </GridItem>
       </Grid>
     </Section>
   </Section>

@@ -146,7 +146,7 @@ export default class StyleContext {
     if (this.state.gridType === 'FLEXBOX' && this.state.flexContainerProperties) {
       const {
         flexDirection,
-        flexWrap,
+        flexWrap = 'wrap',
         justifyContent,
         alignContent,
         alignItems,
@@ -182,10 +182,10 @@ export default class StyleContext {
       alignSelf,
     } = gridItemProps;
     const orderString = order ? `order: ${order};` : '';
-    const flexGrowString = flexGrow ? `flex-grow: ${flexGrow};` : '';
+    const flexGrowString = (flexGrow !== undefined) ? `flex-grow: ${flexGrow};` : '';
     const flexBasisString = flexBasis ? `flex-basis: ${flexBasis};` : '';
-    const flexShrinkString = flexShrink ? `flex-shrink: ${flexShrink}` : '';
-    const flexString = flex ? `flex: ${flex};` : '';
+    const flexShrinkString = (flexShrink !== undefined) ? `flex-shrink: ${flexShrink};` : '';
+    const flexString = (flex !== undefined) ? `flex: ${flex};` : '';
     const alignSelfString = alignSelf ? `align-self: ${alignSelf};` : '';
     return `
       ${orderString}
