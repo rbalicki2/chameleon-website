@@ -11,7 +11,7 @@ const Jumbotron = styled.div`
   text-align: center;
   margin: 60px 0;
   @media ${getMediaQuery('DESKTOP')} {
-    margin: 200px 0;
+    margin: 160px 0;
   }
 `;
 

@@ -23,7 +23,7 @@ export const FONT_SIZES = [
 ];
 
 export const COMPONENT_PADDINGS = [
-  200, // 0 - jumbotron
+  200, // 0 - jumbotron... TODO fix that
   160,
   120,
   96,
@@ -38,5 +38,8 @@ export const COMPONENT_PADDINGS = [
   22,
   20,
   18,
-  16,
+  16, // 15
+  14,
+  12,
+  10,
 ];

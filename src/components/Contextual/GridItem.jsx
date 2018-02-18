@@ -12,6 +12,10 @@ const GridItem = styled.div`
   `}
 `;
 
+const InnerGridItem = styled.div`
+  ${({ context }) => context.innerGridItemLayout}
+`;
+
 type GridItemProps = {
   children: Node,
   gridItemProperties: GridItemProperties,
@@ -25,7 +29,7 @@ export default ({
   <EnterGridItem>
     <ContextProvider>{context =>
       (<GridItem context={context} gridItemProps={gridItemProperties} {...rest}>
-        { children }
+        <InnerGridItem context={context}>{ children }</InnerGridItem>
       </GridItem>)
     }</ContextProvider>
   </EnterGridItem>

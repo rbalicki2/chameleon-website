@@ -142,6 +142,10 @@ export default class StyleContext {
     return this.state.timeOfDay;
   }
 
+  get gridPadding(): number {
+    return this.getComponentPadding(15);
+  }
+
   get gridLayout(): string {
     if (this.state.gridType === 'FLEXBOX' && this.state.flexContainerProperties) {
       const {
@@ -159,6 +163,7 @@ export default class StyleContext {
       const alignItemsString = alignItems ? `align-items: ${alignItems};` : '';
 
       return `
+        margin: ${-1 * this.gridPadding}px;
         display: flex;
         ${flexDirectionString}
         ${flexWrapString}
@@ -172,7 +177,6 @@ export default class StyleContext {
 
   // eslint-disable-next-line class-methods-use-this
   getGridItemLayout(gridItemProps: GridItemProperties): string {
-    // TODO do this method
     const {
       order,
       flexGrow,
@@ -195,6 +199,10 @@ export default class StyleContext {
       ${flexBasisString}
       ${alignSelfString}
     `;
+  }
+
+  get innerGridItemLayout(): string {
+    return `padding: ${this.gridPadding}px;`;
   }
 
   get colorPalette(): ColorPalette {
@@ -251,6 +259,9 @@ export default class StyleContext {
       background-color: ${panelColors[panelDepth].toHex8String()};
       border: 1px solid ${panelColors[3 + panelDepth].toHex8String()};
       box-shadow: ${this.getBoxShadow(3)};
+      &:last-child {
+        margin-bottom: 0;
+      }
     `;
   }
 
