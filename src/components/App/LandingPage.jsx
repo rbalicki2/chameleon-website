@@ -36,8 +36,8 @@ export default () => (<Fragment>
       >source code for this page</a>.
     </Paragraph>
     <ButtonGroup>
-      <Button href="/docs" primary>Documentation</Button>
-      <Button href="https://github.com/rbalicki2/chameleon">Github</Button>
+      <Button to="/docs" primary>Documentation</Button>
+      <Button to="https://github.com/rbalicki2/chameleon">Github</Button>
     </ButtonGroup>
   </Jumbotron>
   <Section>
