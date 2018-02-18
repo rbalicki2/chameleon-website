@@ -32,7 +32,7 @@ export default () => (<Fragment>
     </Paragraph>
     <Paragraph>
       Don&apos;t believe me? Check out the <a
-        href="https://github.com/rbalicki2/chameleon-website/blob/master/src/components/App/LandingPage/index.jsx"
+        href="https://github.com/rbalicki2/chameleon-website/blob/master/src/components/App/LandingPage.jsx"
       >source code for this page</a>.
     </Paragraph>
     <ButtonGroup>
