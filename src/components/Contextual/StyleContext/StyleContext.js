@@ -365,7 +365,7 @@ export default class StyleContext {
     `;
   }
 
-  getButtonProperties(isPrimary: boolean): string {
+  getButtonProperties(isPrimary: boolean, block: boolean): string {
     // TODO: fold more CSS properties from button group into this
     const fgColor = isPrimary
       ? this.colorPalette.actionColorContrast
@@ -376,7 +376,7 @@ export default class StyleContext {
     const borderColor = this.colorPalette.actionColor;
     const borderSize = this.state.panelDepth ? '1px' : '3px';
     const fontSize = this.getFontSize(PARAGRAPH_OFFSET);
-    const padding = 10;
+    const padding = this.getComponentPadding(14);
     const boxShadow = this.getBoxShadowFromColor(
       this.colorPalette.actionColorShadowColor
     );
@@ -387,16 +387,27 @@ export default class StyleContext {
       3,
       5
     );
-    const hoverMovementBehavior = `&:hover {
-      transform: translateY(-2px);
-      box-shadow: ${hoverBoxShadow};
-    }`;
+    const hoverMovementBehavior = `
+      &:hover, &:focus {
+        transform: translateY(-2px);
+        box-shadow: ${hoverBoxShadow};
+      }
+      &:active, &:active:focus {
+        transform: none;
+        box-shadow: ${boxShadow};
+      }
+    `;
     const actualHoverMovementBehavior = this.state.inButtonGroup
       ? `@media ${getMediaQuery('DESKTOP')} { ${hoverMovementBehavior} }`
       : hoverMovementBehavior;
 
+    const blockProperties = block
+      ? 'width: 100%; display: block;'
+      : '';
+
     return `
       color: ${fgColor};
+      ${blockProperties}
       background-color: ${bgColor};
       border: ${borderSize} solid ${borderColor.toHex8String()};
       box-shadow: ${boxShadow};

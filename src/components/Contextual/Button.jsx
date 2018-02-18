@@ -9,15 +9,15 @@ import { EnterButton } from './Updaters';
 // N.B.: passing props directly to Link results in an error being
 // thrown, so we need to filter them out. Lame!
 // https://github.com/styled-components/styled-components/issues/305
-const InternalButton = styled(({ context, primary, ...rest }) => <Link {...rest} />)`
-  ${({ context, primary }) => `
-    ${context.getButtonProperties(primary)}
+const InternalButton = styled(({ context, primary, block, ...rest }) => <Link {...rest} />)`
+  ${({ context, primary, block }) => `
+    ${context.getButtonProperties(primary, block)}
   `}
 `;
 
 const ExternalButton = styled.a`
-  ${({ context, primary }) => `
-    ${context.getButtonProperties(primary)}
+  ${({ context, primary, block }) => `
+    ${context.getButtonProperties(primary, block)}
   `}
 `;
 
