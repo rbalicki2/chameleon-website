@@ -242,7 +242,7 @@ export default class StyleContext {
     return `
       padding: ${50 - (this.state.panelDepth * 10)}px;
       margin-bottom: ${25 - (this.state.panelDepth * 5)}px;
-      background-color: ${panelColors[1 + panelDepth].toHex8String()};
+      background-color: ${panelColors[panelDepth].toHex8String()};
       border: 1px solid ${panelColors[3 + panelDepth].toHex8String()};
       box-shadow: ${this.getBoxShadow(3)};
     `;
@@ -269,7 +269,11 @@ export default class StyleContext {
 
       a {
         color: ${this.colorPalette.actionColor.toHex8String()};
+        font-weight: 600;
         text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
       }
     `;
   }

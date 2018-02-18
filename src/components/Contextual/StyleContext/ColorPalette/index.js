@@ -74,7 +74,6 @@ const getColorPaletteFromBase = (bc: BaseColors): ColorPalette => {
   const fn = backgroundColor.isLight()
     ? 'darken'
     : 'lighten';
-  // console.log(actionColor.clone()[fn](25));
 
   return {
     backgroundColor: bc.backgroundColor,
