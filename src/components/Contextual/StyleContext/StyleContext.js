@@ -402,7 +402,7 @@ export default class StyleContext {
       border: ${borderSize} solid ${borderColor.toHex8String()};
       box-shadow: ${boxShadow};
       transform: none;
-      transition: ${this.getTransition('transform', 100)};
+      transition: ${this.getTransition('transform', 100)}, ${this.getTransition('box-shadow', 100)};
       font-size: ${fontSize}px;
       padding: ${padding}px;
       ${FONT_FAMILY}

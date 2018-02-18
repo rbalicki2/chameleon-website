@@ -21,8 +21,8 @@ export const DayColors: BaseColors = {
 
 export const NightColors: BaseColors = {
   backgroundColor: tinycolor('#1f1736'),
-  actionColor: tinycolor('#F4E02D'),
-  brandColor: tinycolor('#DB85BA'),
+  actionColor: tinycolor('#DB85BA'),
+  brandColor: tinycolor('#ec9213'),
   mostExtremeTextLightness: 0.47,
   mostExtremeBackgroundDarkness: 0.47,
 };
