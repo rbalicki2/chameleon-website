@@ -24,8 +24,11 @@ const FONT_FAMILY = 'font-family: \'Muli\';';
 export default class StyleContext {
   // TODO rename this to .state
   state: StyleContextState;
+  colorPalette: ColorPalette;
   constructor(context: StyleContextState) {
     this.state = context;
+    // cache this for performance, instead of using a getter
+    this.colorPalette = generateColorPalette(this.state);
   }
 
   update(partialContext: $Shape<StyleContextState>): StyleContext {
@@ -201,10 +204,6 @@ export default class StyleContext {
 
   get innerGridItemLayout(): string {
     return `padding: ${this.gridPadding}px;`;
-  }
-
-  get colorPalette(): ColorPalette {
-    return generateColorPalette(this.state);
   }
 
   // eslint-disable-next-line class-methods-use-this

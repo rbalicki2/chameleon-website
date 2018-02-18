@@ -4,6 +4,9 @@ import tinycolor from 'tinycolor2';
 import { type StyleContextState } from '../StyleContextState';
 import { type TinyColor, NightColors, DayColors, type BaseColors } from './baseColors';
 
+// FIXME cache these in a saner fashion
+const colorPalettes: { [string]: ColorPalette } = {};
+
 type ColorArray = $ReadOnlyArray<TinyColor>;
 const COLOR_ARRAY_LENGTH = 10;
 
@@ -88,5 +91,8 @@ export default (state: StyleContextState) => {
   const baseColors: BaseColors = state.timeOfDay === 'DAY'
     ? DayColors
     : NightColors;
-  return getColorPaletteFromBase(baseColors);
+  const { id } = baseColors;
+  const colorPalette = colorPalettes[id] || getColorPaletteFromBase(baseColors);
+  colorPalettes[id] = colorPalette;
+  return colorPalette;
 };
