@@ -11,6 +11,8 @@ import GridItem from 'src/components/Contextual/GridItem';
 import Paragraph from 'src/components/Contextual/Paragraph';
 import Panel from 'src/components/Contextual/Panel';
 
+import CodeSnippet from './CodeSnippet';
+
 const writeLessCodeGridProps = {
   flexDirection: 'row',
   justifyContent: 'center',
@@ -68,10 +70,21 @@ export default () => (<Fragment>
         </GridItem>
         <GridItem gridItemProperties={writeLessCodeGridItemProps} style={{ minWidth: 400 }}>
           <Panel>
-            <Paragraph>Maybe this is different if I have a bunch of shit yeah bunch
-              bunch of shit shit shit shi si asdfasdf adf adf asdf asdf asdf asd
-              bunch asdfa sdf asdfaf as
-            </Paragraph>
+            <CodeSnippet
+              code={`
+                <Header>This header will render with a large font size</Header>
+                <Subheader>As will this subheader</Subheader>
+                <Section>
+                  <Header>You can copy these components</Header>
+                  <Subheader>Directly into a Section</Subheader>
+                </Section>
+                <Panel>
+                  <Header>Or into a Panel, or anywhere else, really,</Header>
+                  <Subheader>And it will just work!</Subheader>
+                  <Paragraph>(And be styled correctly)</Paragraph>
+                </Panel>
+              `}
+            />
           </Panel>
         </GridItem>
       </Grid>
