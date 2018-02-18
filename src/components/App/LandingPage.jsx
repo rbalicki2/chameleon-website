@@ -70,6 +70,8 @@ export default () => (<Fragment>
         </GridItem>
         <GridItem gridItemProperties={writeLessCodeGridItemProps} style={{ minWidth: 400 }}>
           <Panel>
+            <Header>Example</Header>
+            <Paragraph>The following renders correctly, anywhere!</Paragraph>
             <CodeSnippet
               code={`
                 <Header>This header will render with a large font size</Header>

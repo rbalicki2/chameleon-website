@@ -7,7 +7,8 @@ import prism from 'react-syntax-highlighter/styles/prism/prism';
 registerLanguage('jsx', jsx);
 
 const stripLeadingAndTrailingWhitespace = (codeBlock): string => {
-  const lines = codeBlock.split(/(?:\r\n|\n|\r)/);
+  // TODO figure out why we need .reverse...
+  const lines = codeBlock.split(/(?:\r\n|\n|\r)/).reverse();
 
   const countLeadingSpaces = str => str.length - str.trimLeft().length;
 
