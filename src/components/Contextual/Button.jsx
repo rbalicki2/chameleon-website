@@ -9,11 +9,6 @@ const Button = styled.a`
   ${({ context, primary }) => `
     ${context.getButtonProperties(primary)}
   `}
-  cursor: pointer;
-  text-decoration: none;
-  text-align: center;
-  border-radius: 4px;
-  display: inline-block;
 `;
 
 type ButtonProps = {

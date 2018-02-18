@@ -36,8 +36,8 @@ export default () => (<Fragment>
       >source code for this page</a>.
     </Paragraph>
     <ButtonGroup>
-      <Button primary style={{ width: 220 }}>Documentation</Button>
-      <Button href="https://github.com/rbalicki2/chameleon" style={{ width: 220 }}>Github</Button>
+      <Button primary>Documentation</Button>
+      <Button href="https://github.com/rbalicki2/chameleon">Github</Button>
     </ButtonGroup>
   </Jumbotron>
   <Section>

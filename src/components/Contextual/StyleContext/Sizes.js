@@ -24,17 +24,19 @@ export const FONT_SIZES = [
 
 export const COMPONENT_PADDINGS = [
   200, // 0 - jumbotron
+  160,
   120,
   96,
   84,
-  72,
-  64, // 5
+  72, // 5
+  64,
   40,
   36,
   32,
-  28,
-  24, // 10
+  28, // 10
+  24,
+  22,
   20,
+  18,
+  16,
 ];
-
-export const DocumentPaddings = [];

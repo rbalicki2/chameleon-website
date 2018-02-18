@@ -246,8 +246,8 @@ export default class StyleContext {
     const { panelDepth } = this.state;
     const panelColors = this.colorPalette.utilityBackgroundColors;
     return `
-      padding: ${50 - (this.state.panelDepth * 10)}px;
-      margin-bottom: ${25 - (this.state.panelDepth * 5)}px;
+      padding: ${this.getComponentPadding(5)}px;
+      margin-bottom: ${this.getComponentPadding(11)}px;
       background-color: ${panelColors[panelDepth].toHex8String()};
       border: 1px solid ${panelColors[3 + panelDepth].toHex8String()};
       box-shadow: ${this.getBoxShadow(3)};
@@ -266,7 +266,7 @@ export default class StyleContext {
       font-size: ${fontSize}px;
       line-height: 1.5em;
       ${FONT_FAMILY}
-      margin-bottom: ${fontSize}px;
+      margin-bottom: ${this.getComponentPadding(9)}px;
       color: ${this.colorPalette.utilityTextGrays[3].toHex8String()};
 
       &:last-child {
@@ -314,7 +314,7 @@ export default class StyleContext {
     ];
   }
 
-  get headerMargin() {
+  get headerMargin(): number {
     return this.getComponentPadding(5);
   }
 
@@ -342,7 +342,7 @@ export default class StyleContext {
 
   get sectionProperties(): string {
     const bottomMargin = this.getComponentPadding(3);
-    const bottomMarginDesktop = this.getComponentPadding(0);
+    const bottomMarginDesktop = this.getComponentPadding(1);
     return `
       margin-bottom: ${bottomMargin}px;
       &:last-child {
@@ -356,6 +356,7 @@ export default class StyleContext {
   }
 
   getButtonProperties(isPrimary: boolean): string {
+    // TODO: fold more CSS properties from button group into this
     const fgColor = isPrimary
       ? this.colorPalette.actionColorContrast
       : this.colorPalette.actionColor;
@@ -370,32 +371,78 @@ export default class StyleContext {
       this.colorPalette.actionColorShadowColor
     );
 
+    const hoverBoxShadow = this.getBoxShadowFromColor(
+      this.colorPalette.actionColorShadowColor,
+      0,
+      3,
+      5
+    );
+    const hoverMovementBehavior = `&:hover {
+      transform: translateY(-2px);
+      box-shadow: ${hoverBoxShadow};
+    }`;
+    const actualHoverMovementBehavior = this.state.inButtonGroup
+      ? `@media ${getMediaQuery('DESKTOP')} { ${hoverMovementBehavior} }`
+      : hoverMovementBehavior;
+
     return `
       color: ${fgColor};
       background-color: ${bgColor};
       border: ${borderSize} solid ${borderColor.toHex8String()};
       box-shadow: ${boxShadow};
       transform: none;
-      transition: ${this.getTransition('all', 100)};
+      transition: ${this.getTransition('transform', 100)};
       font-size: ${fontSize}px;
       padding: ${padding}px;
       ${FONT_FAMILY}
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      border-radius: ${this.buttonBorderRadius}px;
+      display: inline-block;
+      ${actualHoverMovementBehavior}
     `;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  get buttonBorderRadius(): number {
+    return 4;
   }
 
   get buttonGroupStyles(): string {
     const { panelDepth, sectionDepth } = this.state;
     const padding = 36 - (sectionDepth * 4) - (panelDepth * 8);
+    const borderRadius = this.buttonBorderRadius;
     return `
       margin: ${padding * 2}px 0;
       & > * {
-        margin-right: ${padding}px;
-        margin-left: ${padding}px;
+        width: 100%;
+        box-sizing: border-box;
+        display: block;
+
+        border-radius: 0px;
         &:first-child {
-          margin-left: 0;
+          border-top-right-radius: ${borderRadius}px;
+          border-top-left-radius: ${borderRadius}px;
         }
+
         &:last-child {
-          margin-right: 0;
+          border-bottom-right-radius: ${borderRadius}px;
+          border-bottom-left-radius: ${borderRadius}px;
+        }
+
+        @media ${getMediaQuery('TABLET')} {
+          width: auto;
+          min-width: 300px;
+          display: inline-block;
+          margin-right: ${padding}px;
+          margin-left: ${padding}px;
+          &:first-child {
+            margin-left: 0;
+          }
+          &:last-child {
+            margin-right: 0;
+          }
         }
       }
     `;
