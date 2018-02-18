@@ -51,6 +51,7 @@ export default class StyleContext {
     return this.update({
       fontSizeRoot: JUMBOTRON_FONT_ROOT,
       sectionAlignment: 'center',
+      // TODO make jumbotron not a section
       sectionDepth: 1,
     });
   }
