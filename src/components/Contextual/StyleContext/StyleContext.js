@@ -81,9 +81,6 @@ export default class StyleContext {
   }
 
   enterHeader(): StyleContext {
-    if (!this.state.sectionDepth) {
-      throw new Error('Header-like components must be inside of sections');
-    }
     if (this.state.inHeader) {
       throw new Error('Do not nest Header-like components');
     }
@@ -257,8 +254,8 @@ export default class StyleContext {
       padding: ${this.getComponentPadding(5)}px;
       margin-bottom: ${this.getComponentPadding(11)}px;
       background-color: ${panelColors[panelDepth].toHex8String()};
-      border: 1px solid ${panelColors[3 + panelDepth].toHex8String()};
-      box-shadow: ${this.getBoxShadow(3)};
+      border: 1px solid ${panelColors[1 + panelDepth].toHex8String()};
+      box-shadow: ${this.getBoxShadow(2)};
       &:last-child {
         margin-bottom: 0;
       }
@@ -297,11 +294,13 @@ export default class StyleContext {
 
   get headerTextProperties(): string {
     const { panelDepth, sectionDepth } = this.state;
-    const fontSize = this.getFontSize(0);
+    // FIXME It's hacky to pass 2*panelDepth instead of just a constant
+    const fontSize = this.getFontSize(0 + (2 * panelDepth));
     const fontWeight = 900 - (panelDepth * 200) - (sectionDepth * 100);
     const lineSpacing = fontWeight >= 800
       ? 'letter-spacing: 1px;'
       : '';
+    const blur = panelDepth ? 2 : 4;
 
     return `
       font-size: ${fontSize}px;
@@ -311,7 +310,7 @@ export default class StyleContext {
       text-align: ${this.isInPanel ? 'left' : 'center'};
       ${lineSpacing}
       margin-bottom: ${this.headerMargin}px;
-      text-shadow: ${this.getTextShadow(9)};
+      text-shadow: ${this.getTextShadow(9, 0, 2, blur)};
       color: ${this.colorPalette.brandColor.toHex8String()};
     `;
   }
