@@ -38,7 +38,7 @@ export default class StyleContext {
     });
   }
 
-  incrementSectionDepth(): StyleContext {
+  enterSection(): StyleContext {
     return this.update({
       sectionDepth: this.state.sectionDepth + 1,
     });
@@ -59,7 +59,7 @@ export default class StyleContext {
     });
   }
 
-  incrementPanelDepth(): StyleContext {
+  enterPanel(): StyleContext {
     if (this.state.panelDepth === 2) {
       throw new Error('Do not nest <Panel> components more than twice');
     }
