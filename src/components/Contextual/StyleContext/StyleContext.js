@@ -136,6 +136,7 @@ export default class StyleContext {
       inGridItem: true,
       gridType: undefined,
       flexContainerProperties: undefined,
+      sectionDepth: this.state.sectionDepth + 1,
     });
   }
 
@@ -144,7 +145,7 @@ export default class StyleContext {
   }
 
   get gridPadding(): number {
-    return this.getComponentPadding(15);
+    return this.getComponentPadding(12);
   }
 
   get gridLayout(): string {
@@ -398,7 +399,7 @@ export default class StyleContext {
       }
     `;
     const actualHoverMovementBehavior = this.state.inButtonGroup
-      ? `@media ${getMediaQuery('DESKTOP')} { ${hoverMovementBehavior} }`
+      ? `@media ${getMediaQuery('TABLET')} { ${hoverMovementBehavior} }`
       : hoverMovementBehavior;
 
     const blockProperties = block
