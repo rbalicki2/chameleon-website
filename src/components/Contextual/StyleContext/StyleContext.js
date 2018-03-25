@@ -38,9 +38,9 @@ export default class StyleContext {
     });
   }
 
-  enterSection(): StyleContext {
+  enterSection(depth: number = 1): StyleContext {
     return this.update({
-      sectionDepth: this.state.sectionDepth + 1,
+      sectionDepth: this.state.sectionDepth + depth,
     });
   }
 

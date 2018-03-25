@@ -6,19 +6,19 @@ import { EnterSection } from './Updaters';
 import { ContextProvider } from './StyleContext';
 
 const Section = styled.div`
-  ${({ context }) => `
-    ${context.sectionProperties}
-  `}
+  ${({ context }) => context.sectionProperties}
 `;
 
 type SectionProps = {|
   children: Node,
+  depth: number,
 |};
 
 export default ({
   children,
+  depth,
 }: SectionProps) => (
-  <EnterSection>
+  <EnterSection depth={depth}>
     <ContextProvider>{context =>
       (<Section context={context}>
         { children }

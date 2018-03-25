@@ -8,6 +8,7 @@ export type Action = {|
   timeOfDay: TimeOfDay,
 |} | {|
   type: 'INCREMENT_SECTION_DEPTH',
+  depth: number,
 |} | {|
   type: 'INCREMENT_PANEL_DEPTH',
 |} | {|

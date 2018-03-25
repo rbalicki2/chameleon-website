@@ -51,19 +51,17 @@ export default () => (<Fragment>
           <GridItem gridItemProperties={gridItemProps} style={{ minWidth: 400 }}>
             <Paragraph>
               Chameleon JS is a toolkit for building components that style themselves.
-              Each component receives information using React&apos;s context, for example,
-              that it is nested within two <code>&lt;Panel&gt;</code> components. Using
+              Each component receives information using React&apos;s context. Using
               this information, a component can dynamically calculate its style.
             </Paragraph>
             <Paragraph>
               This means that the code that when writing views, you don&apos;t write any
-              styles! You only write <strong>semantic</strong> information (which specifies
-              the role that the component plays, such as <code>&lt;Paragraph&gt;</code>)
-              and <strong>business logic</strong>!
+              styles. You only write <strong>semantic</strong> information
+              and <strong>business logic</strong>.
             </Paragraph>
             <Paragraph>
-              These views could never have been simpler. But more importantly, now they
-              are also <em>portable</em>! Copy-and-paste the same code into another file,
+              The resulting views could never have been simpler. But more importantly, now they
+              are also <em>portable</em>. Copy-and-paste the same code into another file,
               and <em>it just works</em>.
             </Paragraph>
           </GridItem>
@@ -98,25 +96,118 @@ export default () => (<Fragment>
     <Header>Chameleon JS is a Toolkit</Header>
     <Subheader>Build whatever you want</Subheader>
     <Panel>
-      <Grid gridType="FLEXBOX" flexContainerProperties={gridProps}>
-        <GridItem gridItemProperties={gridItemProps} style={{ minWidth: 400 }}>
-          <Paragraph>
-            Chameleon JS is a set of patterns and tools for building components
-            which style themselves. It is <strong>not</strong> the set of components themselves.
-          </Paragraph>
-          <Paragraph>
-            This website was built with a set of components which may one day be extracted
-            into their own library. For now, they are a proof of concept! You can <a
-              href="https://github.com/rbalicki2/chameleon-website/blob/master/src/components/Contextual"
-            >view the source code</a> to look at how these components were constructed.
-          </Paragraph>
-        </GridItem>
-        <GridItem gridItemProperties={gridItemProps} style={{ minWidth: 400 }}>
-          <Header>Reducers</Header>
-          <Subheader>Reducers</Subheader>
-          <Paragraph>asdfasdf</Paragraph>
-        </GridItem>
-      </Grid>
+      <Section>
+        <Paragraph>
+          Chameleon JS is a set of patterns and tools for building components
+          which style themselves. It is <strong>not</strong> the set of components themselves.
+        </Paragraph>
+        <Paragraph>
+          This website was built with a set of components which may one day be extracted
+          into their own library. For now, they are a proof of concept. You can <a
+            href="https://github.com/rbalicki2/chameleon-website/blob/master/src/components/Contextual"
+          >view the source code</a> to look at how these components were constructed.
+        </Paragraph>
+        <Paragraph>
+          Take a look at the patterns that constitute Chameleon JS.
+        </Paragraph>
+      </Section>
+      <Section>
+        <Header>Context Class</Header>
+        <Paragraph>
+          There is a context class from which all styles are derived. It stores state
+          and exposes an update method, which must return a <b>new instance</b> of the
+          context. In addition, it must expose methods that return the style for various
+          components, depending on the context state.
+        </Paragraph>
+        <Paragraph>
+          (Alternatively, you can use a plain ol&apos; Javascript object.)
+        </Paragraph>
+        <CodeSnippet
+          code={`
+            class StyleContext {
+              constructor(state) {
+                this.state = state || {
+                  sectionDepth: 0,
+                };
+              }
+
+              update(newState) {
+                return new StyleContext({
+                  ...this.state,
+                  ...newState,
+                })
+              }
+
+              get sectionStyle() {
+                return \`
+                  font-size: \${30 - this.state.sectionDepth * 5};
+                \`;
+              }
+            }
+          `}
+        />
+      </Section>
+      <Section>
+        <Header>Context Reducers</Header>
+        <Paragraph>
+          Reducers are a function from one context to a new context. So, for example,
+          you might have a reducer that serves only to increment the panel depth.
+        </Paragraph>
+        <CodeSnippet
+          code={`
+            const contextReducer = (context, action) => {
+              if (action.type === 'INCREMENT_SECTION_DEPTH') {
+                return context.update({
+                  panelDepth: context.panelDepth + 1,
+                });
+              }
+            };
+          `}
+        />
+      </Section>
+      <Section>
+        <Header>Context Updater Components</Header>
+        <Paragraph>
+          Wrap updates to the context in context updater components.
+        </Paragraph>
+        <CodeSnippet
+          code={`
+            const EnterSection = ({ children }) => (<UpdateContext
+              type="INCREMENT_SECTION_DEPTH"
+            >
+              {children}
+            </UpdateContext>);
+          `}
+        />
+      </Section>
+      <Section>
+        <Header>Create Components That Derive Styles From Context</Header>
+        <CodeSnippet
+          code={`
+            const StyledSection = styled.div\`
+              \${({ context }) => context.sectionStyle}
+            \`;
+          `}
+        />
+      </Section>
+      <Section>
+        <Header>Combine these components</Header>
+        <Subheader>Better together</Subheader>
+        <Paragraph>
+          Many components both update the context and provide styles, such as sections,
+          panels, etc. The <code>EnterSection</code> and <code>StyledSection</code> components
+          can be combined into a single <code>Section</code> component.
+        </Paragraph>
+        <CodeSnippet
+          code={`
+            const Section = ({ children }) => (<EnterSection>
+              <StyledSection>
+                { children }
+              </StyledSection>
+            </EnterSection>);
+          `}
+        />
+      </Section>
     </Panel>
   </Section>
   <Section>
