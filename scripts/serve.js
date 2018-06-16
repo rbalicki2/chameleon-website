@@ -22,3 +22,5 @@ WebpackDevServer.addDevServerEntrypoints(webpackConfig, serverOptions);
 const server = new WebpackDevServer(compiler, serverOptions);
 
 server.listen(3000);
+// eslint-disable-next-line no-console
+console.log('listening on localhost:3000');
