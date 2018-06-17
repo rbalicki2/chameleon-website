@@ -7,7 +7,6 @@ export default new StyleContext({
   sectionAlignment: 'left',
   panelDepth: 0,
   timeOfDay: 'DAY',
-  inAppContainer: false,
   inHeader: false,
   inButton: false,
   inButtonGroup: false,
