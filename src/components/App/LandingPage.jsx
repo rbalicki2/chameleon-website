@@ -210,41 +210,52 @@ export default () => (<Fragment>
   <Section>
     <Header>Many Uses of Chameleon JS</Header>
     <Subheader>Think of the possibilities</Subheader>
+    <Panel>
+      <Section>
+        <Header>More Precise Styles</Header>
+        <Paragraph>
+          This website (having very little interactivity) is but the tip of the iceberg for what
+          can be done with Chameleon. My hope is to enable some designer out there to build
+          something more intricate, and yet keep it easy to implement by a web developer.
+        </Paragraph>
+      </Section>
+      <Section>
+        <Header>Enabling/disabling sections of the app</Header>
+        <Paragraph>
+          <code>styleContext</code> can be used to control the <code>pointer-events</code> CSS
+          property. Disable entire sections of the app if they are obscured by a modal!
+        </Paragraph>
+      </Section>
+      <Section>
+        <Header>Easy Form Styles</Header>
+        <Paragraph>
+          Passing down whether a particular field on a form is in an error state can be tricky
+          and painful to get right. Use Chameleon to make form inputs that know how to style
+          themselves based on whether the context indicates that that section of the form is
+          in an error state.
+        </Paragraph>
+      </Section>
+      <Section>
+        <Header>Enforce Invariants</Header>
+        <Paragraph>
+          If your <code>styleContext</code> throws errors when it enters an invalid state, you
+          can prevent your developers from doing silly things, like using a <code>Col</code> outside
+          of a <code>Row</code>, or a <code>GridItem</code> outside of a <code>Grid</code>.
+          Combine this with build-time server-side rendering and you won&apos;t even be able to
+          deploy your app in a broken state!
+        </Paragraph>
+      </Section>
+    </Panel>
   </Section>
-  <Panel>
-    <Section>
-      <Header>More Precise Styles</Header>
-      <Paragraph>
-        This website (having very little interactivity) is but the tip of the iceberg for what
-        can be done with Chameleon. My hope is to enable some designer out there to build
-        something more intricate, and yet keep it easy to implement by a web developer.
-      </Paragraph>
-    </Section>
-    <Section>
-      <Header>Enabling/disabling sections of the app</Header>
-      <Paragraph>
-        <code>styleContext</code> can be used to control the <code>pointer-events</code> CSS
-        property. Disable entire sections of the app if they are obscured by a modal!
-      </Paragraph>
-    </Section>
-    <Section>
-      <Header>Easy Form Styles</Header>
-      <Paragraph>
-        Passing down whether a particular field on a form is in an error state can be tricky
-        and painful to get right. Use Chameleon to make form inputs that know how to style
-        themselves based on whether the context indicates that that section of the form is
-        in an error state.
-      </Paragraph>
-    </Section>
-    <Section>
-      <Header>Enforce Invariants</Header>
-      <Paragraph>
-        If your <code>styleContext</code> throws errors when it enters an invalid state, you
-        can prevent your developers from doing silly things, like using a <code>Col</code> outside
-        of a <code>Row</code>, or a <code>GridItem</code> outside of a <code>Grid</code>.
-        Combine this with build-time server-side rendering and you won&apos;t even be able to
-        deploy your app in a broken state!
-      </Paragraph>
-    </Section>
-  </Panel>
+  <Section>
+    <Header>Legal, etc.</Header>
+    <Panel>
+      <Section>
+        <Header>License</Header>
+        <Paragraph>
+          Chameleon is licensed under the MIT license.
+        </Paragraph>
+      </Section>
+    </Panel>
+  </Section>
 </Fragment>);
