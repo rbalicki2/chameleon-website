@@ -14,7 +14,7 @@ type AppProps = {|
 const AppContainer = styled.div`
   width: 100%;
   max-width: 970px;
-  margin: 80px auto 0;
+  margin: 80px auto 80px;
 `;
 
 export default ({

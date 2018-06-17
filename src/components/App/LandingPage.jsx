@@ -43,7 +43,7 @@ export default () => (<Fragment>
     </ButtonGroup>
   </Jumbotron>
   <Section>
-    <Header>Write less code</Header>
+    <Header>Write Less Code</Header>
     <Subheader>No more styling information in your views</Subheader>
     <Section>
       <Panel>
@@ -139,7 +139,7 @@ export default () => (<Fragment>
               }
 
               get sectionStyle() {
-                // A section's font-size decreases by 5px for each nested section!
+                // A section's font size decreases by 5px for each nested section!
                 return \`
                   font-size: \${30 - this.state.sectionDepth * 5};
                 \`;
@@ -155,8 +155,9 @@ export default () => (<Fragment>
         </Paragraph>
         <CodeSnippet
           code={`
-            // The simplest possible reducer calls a function that you pass in.
-            functionReducer = (previousContext, { call }) => call(previousContext);
+            // The most common reducer calls a function that you pass in.
+            functionReducer = (previousContext, { update }) => update(previousContext);
+            // it is exported as reducers.functionReducer from chameleon.
           `}
         />
       </Section>
@@ -168,7 +169,7 @@ export default () => (<Fragment>
         <CodeSnippet
           code={`
             const EnterSection = ({ children }) => (<UpdateContext
-              call={context => context.update({ sectionDepth: context.sectionDepth + 1 })}
+              update={context => context.update({ sectionDepth: context.sectionDepth + 1 })}
             >
               {children}
             </UpdateContext>);
@@ -186,13 +187,13 @@ export default () => (<Fragment>
         />
       </Section>
       <Section>
-        <Header>Combine these components</Header>
+        <Header>Combine These Components</Header>
         <Subheader>Better together</Subheader>
         <Paragraph>
           Many components both update the context and render DOM, such as sections,
           panels, etc. In the previous example,
           the <code>EnterSection</code> and <code>StyledSection</code> components
-          can be combined into a single <code>Section</code> component.
+          should be combined into a single <code>Section</code> component.
         </Paragraph>
         <CodeSnippet
           code={`
@@ -207,7 +208,43 @@ export default () => (<Fragment>
     </Panel>
   </Section>
   <Section>
-    <Header>Chameleon JS is Hot</Header>
-    <Subheader>It uses advanced React</Subheader>
+    <Header>Many Uses of Chameleon JS</Header>
+    <Subheader>Think of the possibilities</Subheader>
   </Section>
+  <Panel>
+    <Section>
+      <Header>More Precise Styles</Header>
+      <Paragraph>
+        This website (having very little interactivity) is but the tip of the iceberg for what
+        can be done with Chameleon. My hope is to enable some designer out there to build
+        something more intricate, and yet keep it easy to implement by a web developer.
+      </Paragraph>
+    </Section>
+    <Section>
+      <Header>Enabling/disabling sections of the app</Header>
+      <Paragraph>
+        <code>styleContext</code> can be used to control the <code>pointer-events</code> CSS
+        property. Disable entire sections of the app if they are obscured by a modal!
+      </Paragraph>
+    </Section>
+    <Section>
+      <Header>Easy Form Styles</Header>
+      <Paragraph>
+        Passing down whether a particular field on a form is in an error state can be tricky
+        and painful to get right. Use Chameleon to make form inputs that know how to style
+        themselves based on whether the context indicates that that section of the form is
+        in an error state.
+      </Paragraph>
+    </Section>
+    <Section>
+      <Header>Enforce Invariants</Header>
+      <Paragraph>
+        If your <code>styleContext</code> throws errors when it enters an invalid state, you
+        can prevent your developers from doing silly things, like using a <code>Col</code> outside
+        of a <code>Row</code>, or a <code>GridItem</code> outside of a <code>Grid</code>.
+        Combine this with build-time server-side rendering and you won&apos;t even be able to
+        deploy your app in a broken state!
+      </Paragraph>
+    </Section>
+  </Panel>
 </Fragment>);
