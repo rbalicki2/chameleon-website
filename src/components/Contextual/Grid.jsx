@@ -2,12 +2,12 @@
 import React, { type Node } from 'react';
 import styled from 'styled-components';
 
-import { ContextProvider } from './StyleContext';
-import { EnterGrid } from './Updaters';
+import { ContextProvider, UpdateContext } from './StyleContext';
+import type StyleContext from './StyleContext/StyleContext';
 import { type GridType, type FlexContainerProperties } from './StyleContext/Grid';
 
 const Grid = styled.div`
-  ${({ context }) => `
+  ${({ context }: { context: StyleContext }) => `
     ${context.gridLayout}
   `}
 `;
@@ -23,11 +23,11 @@ export default ({
   gridType,
   flexContainerProperties,
 }: GridProps) => (
-  <EnterGrid gridType={gridType} flexContainerProperties={flexContainerProperties}>
+  <UpdateContext call={context => context.enterGrid(gridType, flexContainerProperties)}>
     <ContextProvider>{context =>
       (<Grid context={context}>
         { children }
       </Grid>)
     }</ContextProvider>
-  </EnterGrid>
+  </UpdateContext>
 );

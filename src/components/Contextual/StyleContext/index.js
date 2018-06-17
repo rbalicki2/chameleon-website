@@ -1,36 +1,33 @@
 // @flow
-// import { Component } from 'react';
-import { makeContextComponents } from 'chameleon';
-import contextReducer from './contextReducer';
+import * as React from 'react';
+import { makeContextComponents, reducers } from 'chameleon';
 import initialContext from './initialContext';
-import { type ActionType } from './Action';
+import type StyleContext from './StyleContext';
 
-type HasType = {
-  type: ActionType,
+type UpdateContextProps = {
+  call: StyleContext => StyleContext,
 };
+
+type ContextProviderProps = {
+  children: StyleContext => any,
+}
 
 // TODO get flow working here
 type MakeContextComponents = {
-  UpdateContext: any, // Component<any>,
-  ContextProvider: any, // Component<any>,
-  updateContextGenerator: (HasType) => any,
-  // propertyComponentGenerator
+  UpdateContext: React.ComponentType<UpdateContextProps>,
+  ContextProvider: React.ComponentType<ContextProviderProps>,
 }
 
 const contextComponents: MakeContextComponents = makeContextComponents(
-  contextReducer,
+  reducers.functionReducer,
   initialContext
 );
 const {
   UpdateContext,
   ContextProvider,
-  updateContextGenerator,
-  // propertyComponentGenerator,
 } = contextComponents;
 
 export {
   UpdateContext,
   ContextProvider,
-  updateContextGenerator,
-  // propertyComponentGenerator,
 };

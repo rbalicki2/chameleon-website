@@ -2,9 +2,8 @@
 import React, { type Node } from 'react';
 import styled from 'styled-components';
 
-import { ContextProvider } from './StyleContext';
+import { ContextProvider, UpdateContext } from './StyleContext';
 import { type GridItemProperties } from './StyleContext/Grid';
-import { EnterGridItem } from './Updaters';
 
 const GridItem = styled.div`
   ${({ context, gridItemProps }) => `
@@ -26,11 +25,11 @@ export default ({
   gridItemProperties = {},
   ...rest
 }: GridItemProps) => (
-  <EnterGridItem>
+  <UpdateContext call={context => context.enterGridItem()}>
     <ContextProvider>{context =>
       (<GridItem context={context} gridItemProps={gridItemProperties} {...rest}>
         <InnerGridItem context={context}>{ children }</InnerGridItem>
       </GridItem>)
     }</ContextProvider>
-  </EnterGridItem>
+  </UpdateContext>
 );

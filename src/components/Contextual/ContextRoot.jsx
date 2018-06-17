@@ -2,20 +2,18 @@
 import React from 'react';
 import StateProvider from 'src/components/Providers/StateProvider';
 
-import { SetTimeOfDay } from './Updaters';
 import { type TimeOfDay } from './StyleContext/TimeOfDay';
 import Background from './Background';
+import { UpdateContext } from './StyleContext';
 
 type TimeOfDayUpdater = (TimeOfDay) => void;
 
-// $FlowFixMe - bah!
 export default () => (<StateProvider initialValue="DAY">
   {
     (time: TimeOfDay, setTimeOfDay: TimeOfDayUpdater) =>
-      // $FlowFixMe
-      (<SetTimeOfDay timeOfDay={time}>
+      (<UpdateContext call={context => context.setTimeOfDay(time)}>
         <Background />
         { false && setTimeOfDay }
-      </SetTimeOfDay>)
+      </UpdateContext>)
   }
 </StateProvider>);

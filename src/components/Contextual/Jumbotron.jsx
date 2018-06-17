@@ -2,8 +2,8 @@
 import React, { type Node } from 'react';
 import styled from 'styled-components';
 
-import { EnterJumbotron } from './Updaters';
 import getMediaQuery from './StyleContext/getMediaQuery';
+import { UpdateContext } from './StyleContext';
 
 // TODO use EnterJumbotron component to ensure we're not contained
 // in a section.
@@ -22,9 +22,9 @@ type JumbotronProps = {|
 export default ({
   children,
 }: JumbotronProps) => (
-  <EnterJumbotron>
+  <UpdateContext call={context => context.enterJumbotron()}>
     <Jumbotron>
       { children }
     </Jumbotron>
-  </EnterJumbotron>
+  </UpdateContext>
 );
