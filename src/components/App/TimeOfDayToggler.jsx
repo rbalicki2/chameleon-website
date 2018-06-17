@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import ToggleSwitch from '../Contextual/ToggleSwitch';
+import ToggleSwitch from 'src/components/Contextual/ToggleSwitch';
 
 type TimeOfDayTogglerProps = {|
   toggleTimeOfDay: () => void,

@@ -8,7 +8,6 @@ export type StyleContextState = {
   sectionAlignment: Alignment,
   panelDepth: number,
   timeOfDay: TimeOfDay,
-  inAppContainer: boolean,
   inHeader: boolean,
   inButton: boolean,
   inButtonGroup: boolean,

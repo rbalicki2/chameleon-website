@@ -9,5 +9,4 @@ export const EnterHeader = updateContextGenerator({ type: 'ENTER_HEADER' });
 export const EnterButton = updateContextGenerator({ type: 'ENTER_BUTTON' });
 export const EnterButtonGroup = updateContextGenerator({ type: 'ENTER_BUTTON_GROUP' });
 export const EnterGrid = updateContextGenerator({ type: 'ENTER_GRID' });
-export const EnterAppContainer = updateContextGenerator({ type: 'ENTER_APP_CONTAINER' });
 export const EnterGridItem = updateContextGenerator({ type: 'ENTER_GRID_ITEM' });

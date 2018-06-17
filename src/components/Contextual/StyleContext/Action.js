@@ -14,8 +14,6 @@ export type Action = {|
 |} | {|
   type: 'ENTER_HEADER',
 |} | {|
-  type: 'ENTER_APP_CONTAINER',
-|} | {|
   type: 'ENTER_JUMBOTRON',
 |} | GridAction | {|
   type: 'ENTER_BUTTON',
@@ -35,7 +33,6 @@ export type ActionType = 'SET_TIME_OF_DAY'
   | 'INCREMENT_SECTION_DEPTH'
   | 'INCREMENT_PANEL_DEPTH'
   | 'ENTER_HEADER'
-  | 'ENTER_APP_CONTAINER'
   | 'ENTER_JUMBOTRON'
   | 'ENTER_GRID'
   | 'ENTER_BUTTON'
