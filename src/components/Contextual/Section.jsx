@@ -2,8 +2,7 @@
 import React, { type Node } from 'react';
 import styled from 'styled-components';
 
-import { EnterSection } from './Updaters';
-import { ContextProvider } from './StyleContext';
+import { ContextProvider, UpdateContext } from './StyleContext';
 
 const Section = styled.div`
   ${({ context }) => context.sectionProperties}
@@ -14,15 +13,21 @@ type SectionProps = {|
   depth: number,
 |};
 
-export default ({
+const SectionComponent = ({
   children,
   depth,
 }: SectionProps) => (
-  <EnterSection depth={depth}>
+  <UpdateContext call={context => context.enterSection(depth)}>
     <ContextProvider>{context =>
       (<Section context={context}>
         { children }
       </Section>)
     }</ContextProvider>
-  </EnterSection>
+  </UpdateContext>
 );
+
+SectionComponent.defaultProps = {
+  depth: 1,
+};
+
+export default SectionComponent;

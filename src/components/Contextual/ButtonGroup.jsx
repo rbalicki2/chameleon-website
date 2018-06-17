@@ -2,8 +2,7 @@
 import React, { type Node } from 'react';
 import styled from 'styled-components';
 
-import { ContextProvider } from './StyleContext';
-import { EnterButtonGroup } from './Updaters';
+import { ContextProvider, UpdateContext } from './StyleContext';
 
 const ButtonGroup = styled.div`
   ${({ context }) => context.buttonGroupStyles}
@@ -16,11 +15,11 @@ type ButtonGroupProps = {|
 export default ({
   children,
 }: ButtonGroupProps) => (
-  <EnterButtonGroup>
+  <UpdateContext call={context => context.enterButtonGroup()}>
     <ContextProvider>{context =>
       (<ButtonGroup context={context}>
         { children }
       </ButtonGroup>)
     }</ContextProvider>
-  </EnterButtonGroup>
+  </UpdateContext>
 );

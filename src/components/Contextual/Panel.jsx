@@ -1,8 +1,7 @@
 // @flow
 import React, { type Node } from 'react';
 import styled from 'styled-components';
-import { ContextProvider } from './StyleContext';
-import { EnterPanel } from './Updaters';
+import { ContextProvider, UpdateContext } from './StyleContext';
 
 type PanelProps = {
   children: Node,
@@ -17,10 +16,10 @@ const Panel = styled.div`
   `}
 `;
 
-export default ({ children }: PanelProps) => (<EnterPanel>
+export default ({ children }: PanelProps) => (<UpdateContext call={context => context.enterPanel()}>
   <ContextProvider>{ context =>
     (<Panel context={context}>
       { children }
     </Panel>)
   }</ContextProvider>
-</EnterPanel>);
+</UpdateContext>);

@@ -2,8 +2,7 @@
 import { type TimeOfDay } from './TimeOfDay';
 import generateColorPalette, { type ColorPalette } from './ColorPalette';
 import { type StyleContextState } from './StyleContextState';
-import { type GridAction } from './Action';
-import { type GridItemProperties } from './Grid';
+import { type GridItemProperties, type GridType, type FlexContainerProperties } from './Grid';
 import {
   JUMBOTRON_FONT_ROOT,
   FONT_SIZES,
@@ -75,15 +74,6 @@ export default class StyleContext {
     });
   }
 
-  enterAppContainer(): StyleContext {
-    if (this.state.inAppContainer) {
-      throw new Error('Do not nest <AppContainer /> components');
-    }
-    return this.update({
-      inAppContainer: true,
-    });
-  }
-
   enterHeader(): StyleContext {
     if (this.state.inHeader) {
       throw new Error('Do not nest Header-like components');
@@ -112,12 +102,12 @@ export default class StyleContext {
     });
   }
 
-  enterGrid(action: GridAction): StyleContext {
-    if (action.gridType === 'FLEXBOX') {
+  enterGrid(gridType: GridType, flexContainerProperties: FlexContainerProperties): StyleContext {
+    if (gridType === 'FLEXBOX') {
       return this.update({
         inGridItem: false,
-        gridType: action.gridType,
-        flexContainerProperties: action.flexContainerProperties,
+        gridType,
+        flexContainerProperties,
       });
     }
     // N.B. this messes up formatting, but it should be uncommented:

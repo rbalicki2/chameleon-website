@@ -2,8 +2,7 @@
 import React, { type Node } from 'react';
 import styled from 'styled-components';
 
-import { ContextProvider } from './StyleContext';
-import { EnterHeader } from './Updaters';
+import { ContextProvider, UpdateContext } from './StyleContext';
 
 const Header = styled.div`
   ${({ context }) => `
@@ -18,11 +17,11 @@ type HeaderProps = {|
 export default ({
   children,
 }: HeaderProps) => (
-  <EnterHeader>
+  <UpdateContext call={context => context.enterHeader()}>
     <ContextProvider>{context =>
       (<Header context={context}>
         { children }
       </Header>)
     }</ContextProvider>
-  </EnterHeader>
+  </UpdateContext>
 );
