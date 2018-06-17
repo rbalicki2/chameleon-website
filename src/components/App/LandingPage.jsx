@@ -93,7 +93,7 @@ export default () => (<Fragment>
     </Section>
   </Section>
   <Section>
-    <Header>Chameleon JS is a Toolkit</Header>
+    <Header>Chameleon JS is a Tool</Header>
     <Subheader>Build whatever you want</Subheader>
     <Panel>
       <Section>
@@ -116,7 +116,7 @@ export default () => (<Fragment>
         <Paragraph>
           There is a context class from which all styles are derived. It stores state
           and exposes an update method, which must return a <b>new instance</b> of the
-          context. In addition, it must expose methods that return the style for various
+          context. In addition, it exposes methods that return the style for various
           components, depending on the context state.
         </Paragraph>
         <Paragraph>
@@ -139,6 +139,7 @@ export default () => (<Fragment>
               }
 
               get sectionStyle() {
+                // A section's font-size decreases by 5px for each nested section!
                 return \`
                   font-size: \${30 - this.state.sectionDepth * 5};
                 \`;
@@ -150,18 +151,12 @@ export default () => (<Fragment>
       <Section>
         <Header>Context Reducers</Header>
         <Paragraph>
-          Reducers are a function from one context to a new context. So, for example,
-          you might have a reducer that serves only to increment the panel depth.
+          Reducers are a function from one context to a new context.
         </Paragraph>
         <CodeSnippet
           code={`
-            const contextReducer = (context, action) => {
-              if (action.type === 'INCREMENT_SECTION_DEPTH') {
-                return context.update({
-                  panelDepth: context.panelDepth + 1,
-                });
-              }
-            };
+            // The simplest possible reducer calls a function that you pass in.
+            functionReducer = (previousContext, { call }) => call(previousContext);
           `}
         />
       </Section>
@@ -173,7 +168,7 @@ export default () => (<Fragment>
         <CodeSnippet
           code={`
             const EnterSection = ({ children }) => (<UpdateContext
-              type="INCREMENT_SECTION_DEPTH"
+              call={context => context.update({ sectionDepth: context.sectionDepth + 1 })}
             >
               {children}
             </UpdateContext>);
@@ -194,8 +189,9 @@ export default () => (<Fragment>
         <Header>Combine these components</Header>
         <Subheader>Better together</Subheader>
         <Paragraph>
-          Many components both update the context and provide styles, such as sections,
-          panels, etc. The <code>EnterSection</code> and <code>StyledSection</code> components
+          Many components both update the context and render DOM, such as sections,
+          panels, etc. In the previous example,
+          the <code>EnterSection</code> and <code>StyledSection</code> components
           can be combined into a single <code>Section</code> component.
         </Paragraph>
         <CodeSnippet
