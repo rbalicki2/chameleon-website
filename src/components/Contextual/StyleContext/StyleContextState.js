@@ -15,4 +15,5 @@ export type StyleContextState = {
   gridType: ?GridType,
   flexContainerProperties: ?FlexContainerProperties,
   inGridItem: boolean,
+  rotation: number,
 };

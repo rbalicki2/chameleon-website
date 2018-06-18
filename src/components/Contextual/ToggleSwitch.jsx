@@ -12,6 +12,7 @@ const Outer = styled.div`
   width: 60px;
   height: 34px;
   position: relative;
+  margin-bottom: 20px;
 `;
 
 const Slider = styled.span`

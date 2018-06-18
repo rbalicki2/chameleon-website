@@ -14,4 +14,5 @@ export default new StyleContext({
   gridType: undefined,
   inGridItem: false,
   flexContainerProperties: undefined,
+  rotation: 0,
 });

@@ -74,6 +74,12 @@ export default class StyleContext {
     });
   }
 
+  rotate(rotation: number): StyleContext {
+    return this.update({
+      rotation,
+    });
+  }
+
   enterHeader(): StyleContext {
     if (this.state.inHeader) {
       throw new Error('Do not nest Header-like components');
@@ -238,10 +244,22 @@ export default class StyleContext {
     return `${h}px ${v}px ${blur}px ${color}`;
   }
 
+  get transform(): CssDeclaration {
+    return `
+      transform: rotate(${this.state.rotation}deg);
+      transition: transform 400ms linear;
+    `;
+  }
+
+  get transformTransition(): CssDeclaration {
+    return this.getTransition('transform', 400);
+  }
+
   get panelProperties(): string {
     const { panelDepth } = this.state;
     const panelColors = this.colorPalette.utilityBackgroundColors;
     return `
+      ${this.transform}
       padding: ${this.getComponentPadding(5)}px;
       margin-bottom: ${this.getComponentPadding(11)}px;
       background-color: ${panelColors[panelDepth].toHex8String()};
@@ -261,6 +279,7 @@ export default class StyleContext {
     const fontSize = this.getFontSize(PARAGRAPH_OFFSET);
 
     return `
+      ${this.transform}
       font-weight: 300;
       font-size: ${fontSize}px;
       line-height: 1.5em;
@@ -294,6 +313,7 @@ export default class StyleContext {
     const blur = panelDepth ? 2 : 4;
 
     return `
+      ${this.transform}
       font-size: ${fontSize}px;
       line-height: 1.3em;
       ${FONT_FAMILY}
@@ -324,6 +344,7 @@ export default class StyleContext {
     const fontSize = this.getFontSize(SUBHEADER_OFFSET + (2 * this.state.panelDepth));
     const fontWeight = 200;
     return `
+      ${this.transform}
       margin-top: ${-1 * this.headerMargin}px;
       margin-bottom: ${this.headerMargin}px;
       text-transform: uppercase;
@@ -345,6 +366,7 @@ export default class StyleContext {
     const bottomMargin = this.getComponentPadding(3);
     const bottomMarginDesktop = this.getComponentPadding(1);
     return `
+      ${this.transform}
       margin-bottom: ${bottomMargin}px;
       &:last-child {
         margin-bottom: 0;
@@ -397,13 +419,16 @@ export default class StyleContext {
       : '';
 
     return `
+      ${this.transform}
       color: ${fgColor};
       ${blockProperties}
       background-color: ${bgColor};
       border: ${borderSize} solid ${borderColor.toHex8String()};
       box-shadow: ${boxShadow};
       transform: none;
-      transition: ${this.getTransition('transform', 100)}, ${this.getTransition('box-shadow', 100)};
+      transition: ${this.getTransition('transform', 100)},
+        ${this.getTransition('box-shadow', 100)},
+        ${this.transformTransition};
       font-size: ${fontSize}px;
       padding: ${padding}px;
       ${FONT_FAMILY}
@@ -426,6 +451,7 @@ export default class StyleContext {
     const padding = 36 - (sectionDepth * 4) - (panelDepth * 8);
     const borderRadius = this.buttonBorderRadius;
     return `
+      ${this.transform}
       margin: ${padding * 2}px 0;
       & > * {
         width: 100%;
