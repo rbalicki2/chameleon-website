@@ -17,7 +17,7 @@ const Panel = styled.div`
 `;
 
 export default ({ children }: PanelProps) => (<UpdateContext call={context => context.enterPanel()}>
-  <ContextProvider>{ context =>
+  <ContextProvider>{context =>
     (<Panel context={context}>
       { children }
     </Panel>)
