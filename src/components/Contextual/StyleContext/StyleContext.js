@@ -364,7 +364,7 @@ export default class StyleContext {
 
   get sectionProperties(): string {
     const bottomMargin = this.getComponentPadding(3);
-    const bottomMarginDesktop = this.getComponentPadding(1);
+    const bottomMarginDesktop = this.getComponentPadding(3);
     return `
       ${this.transform}
       margin-bottom: ${bottomMargin}px;
