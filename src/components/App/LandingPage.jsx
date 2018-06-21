@@ -114,7 +114,7 @@ export default () => (<Fragment>
       <Section>
         <Header>Context Class</Header>
         <Paragraph>
-        https://docs.google.com/presentation/d/16yfl7YsyovjsG1rzX4WaxeUeWeIL5I93JS232Iy3Pq0/edit?usp=sharing
+          https://docs.google.com/presentation/d/16yfl7YsyovjsG1rzX4WaxeUeWeIL5I93JS232Iy3Pq0/edit?usp=sharing
           There is a context class from which all styles are derived. It stores state
           and exposes an update method, which must return a <b>new instance</b> of the
           context. In addition, it exposes methods that return the style for various
