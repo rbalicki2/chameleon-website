@@ -169,7 +169,7 @@ export default () => (<Fragment>
         <CodeSnippet
           code={`
             const EnterSection = ({ children }) => (<UpdateContext
-              update={context => context.update({ sectionDepth: context.sectionDepth + 1 })}
+              call={context => context.update({ sectionDepth: context.sectionDepth + 1 })}
             >
               {children}
             </UpdateContext>);

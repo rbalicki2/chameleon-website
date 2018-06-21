@@ -354,6 +354,10 @@ export default class StyleContext {
       text-align: ${this.isInPanel ? 'left' : 'center'};
       font-weight: ${fontWeight};
       color: ${this.colorPalette.utilityTextGrays[5].toHex8String()};
+
+      pre, code {
+        text-transform: none;
+      }
     `;
   }
 
