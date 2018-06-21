@@ -10,7 +10,6 @@ dependencies:
 test:
   override:
     # No tests or linting, this is only a test project!
-    - npm run lint
     - npm run test
 
 # First one that matches will be run
