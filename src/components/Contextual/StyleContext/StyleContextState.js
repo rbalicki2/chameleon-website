@@ -2,6 +2,7 @@
 import { type TimeOfDay } from './TimeOfDay';
 import { type GridType, type FlexContainerProperties } from './Grid';
 import { type Alignment } from './Alignment';
+import { type ColorPalette } from './ColorPalette';
 
 export type StyleContextState = {
   sectionDepth: number,
@@ -16,4 +17,5 @@ export type StyleContextState = {
   flexContainerProperties: ?FlexContainerProperties,
   inGridItem: boolean,
   rotation: number,
+  colorPalette: ?ColorPalette,
 };

@@ -2,11 +2,13 @@
 import React, { Fragment } from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
+import tinycolor from 'tinycolor2';
 
 import StateProvider from 'src/components/Providers/StateProvider';
 import { type TimeOfDay } from 'src/components/Contextual/StyleContext/TimeOfDay';
 import Background from 'src/components/Contextual/Background';
 import App from 'src/components/App';
+import Button from 'src/components/Contextual/Button';
 import { UpdateContext } from './components/Contextual/StyleContext';
 import ToggleSwitch from './components/Contextual/ToggleSwitch';
 
@@ -21,11 +23,28 @@ import safariPinnedTab from './components/App/Head/safari-pinned-tab.svg?externa
 // $FlowFixMe
 import favicon from './components/App/Head/favicon.ico';
 
+// eslint-disable-next-line import/no-named-as-default
+import type ColorPalette from './components/Contextual/StyleContext/ColorPalette';
+import { type BaseColors } from './components/Contextual/StyleContext/ColorPalette/baseColors';
+import { getColorPaletteFromBase } from './components/Contextual/StyleContext/ColorPalette';
+
+import uploadImage from './image-api';
+
 const UpperRightDiv = styled.div`
   position: fixed;
   top: 20px;
   right: 20px;
 `;
+
+const baseColors: BaseColors = {
+  id: 'day',
+  backgroundColor: tinycolor('#fcfae8'), // yellow
+  actionColor: tinycolor('#0a7623'),
+  brandColor: tinycolor('#ec9213'),
+  mostExtremeTextLightness: 0.47,
+  mostExtremeBackgroundDarkness: 0.3,
+};
+const initialColorPalette: ColorPalette = getColorPaletteFromBase(baseColors);
 
 type TimeOfDayUpdater = (TimeOfDay) => void;
 export default () => (<Fragment>
@@ -38,27 +57,28 @@ export default () => (<Fragment>
     <meta name="theme-color" content="#ffffff" />
     <link rel="mask-icon" href={safariPinnedTab} color="#5bbad5" />
   </Helmet>
-  <StateProvider initialValue="DAY">
-    {
-      (time: TimeOfDay, setTimeOfDay: TimeOfDayUpdater) =>
-        (<StateProvider initialValue={0}>{(rotation, setRotation) => (
-          <UpdateContext call={context => context.setTimeOfDay(time).rotate(rotation)}>
-            <Fragment>
-              <Background />
-              <App />
-              <UpperRightDiv>
-                <ToggleSwitch
-                  isChecked={time === 'DAY'}
-                  onClick={() => setTimeOfDay(time === 'DAY' ? 'NIGHT' : 'DAY')}
-                />
-                <ToggleSwitch
-                  isChecked={!!rotation}
-                  onClick={() => setRotation(rotation ? 0 : 90)}
-                />
-              </UpperRightDiv>
-            </Fragment>
-          </UpdateContext>
-        )}</StateProvider>)
-    }
-  </StateProvider>
+  <StateProvider initialValue={initialColorPalette}>{
+    (colorPalette: ColorPalette, setColorPalette: TimeOfDayUpdater) =>
+      (<StateProvider initialValue={0}>{(rotation, setRotation) => (
+        <UpdateContext call={context => context.setColorPalette(colorPalette).rotate(rotation)}>
+          <Fragment>
+            <Background />
+            <App />
+            <UpperRightDiv>
+              <ToggleSwitch
+                isChecked={!!rotation}
+                onClick={() => setRotation(rotation ? 0 : 90)}
+              />
+              <Button onClick={() => uploadImage().then(setColorPalette)}>
+                ?
+              </Button>
+            </UpperRightDiv>
+          </Fragment>
+        </UpdateContext>
+      )}</StateProvider>)
+  }</StateProvider>
 </Fragment>);
+
+
+// curl --user "acc_76a13abf730bf61:73899e013831bad56f8d5d72cb491fe7"
+// https://api.imagga.com/v1/colors?url=https://imagga.com/static/images/tagging/wind-farm-538576_640.jpg

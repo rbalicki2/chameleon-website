@@ -55,7 +55,7 @@ const getColorArray = (
   return utilityTextGrays;
 };
 
-const getColorPaletteFromBase = (bc: BaseColors): ColorPalette => {
+export const getColorPaletteFromBase = (bc: BaseColors): ColorPalette => {
   const {
     backgroundColor,
     mostExtremeTextLightness,
