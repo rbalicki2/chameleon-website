@@ -15,4 +15,5 @@ export default new StyleContext({
   inGridItem: false,
   flexContainerProperties: undefined,
   rotation: 0,
+  colorPalette: undefined,
 });

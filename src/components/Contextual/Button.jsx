@@ -22,14 +22,14 @@ const ExternalButton = styled.a`
 
 type ButtonProps = {
   children: Node,
-  primary: boolean,
+  primary?: boolean,
   to?: string,
   href?: string,
 };
 
 export default ({
   children,
-  primary,
+  primary = true,
   to,
   href,
   ...rest

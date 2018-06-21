@@ -21,13 +21,13 @@ const FONT_FAMILY = 'font-family: \'Muli\';';
 
 // TODO memoize every method
 export default class StyleContext {
-  // TODO rename this to .state
   state: StyleContextState;
   colorPalette: ColorPalette;
   constructor(context: StyleContextState) {
     this.state = context;
     // cache this for performance, instead of using a getter
-    this.colorPalette = generateColorPalette(this.state);
+    // this.colorPalette = generateColorPalette(this.state);
+    this.colorPalette = this.state.colorPalette || generateColorPalette(this.state);
   }
 
   update(partialContext: $Shape<StyleContextState>): StyleContext {
@@ -71,6 +71,12 @@ export default class StyleContext {
   setTimeOfDay(timeOfDay: TimeOfDay): StyleContext {
     return this.update({
       timeOfDay,
+    });
+  }
+
+  setColorPalette(colorPalette: ColorPalette): StyleContext {
+    return this.update({
+      colorPalette,
     });
   }
 
