@@ -4,24 +4,10 @@ import Header from 'src/components/Contextual/Header';
 import Subheader from 'src/components/Contextual/Subheader';
 import Jumbotron from 'src/components/Contextual/Jumbotron';
 import Section from 'src/components/Contextual/Section';
-import Button from 'src/components/Contextual/Button';
-import ButtonGroup from 'src/components/Contextual/ButtonGroup';
-import Grid from 'src/components/Contextual/Grid';
-import GridItem from 'src/components/Contextual/GridItem';
 import Paragraph from 'src/components/Contextual/Paragraph';
 import Panel from 'src/components/Contextual/Panel';
 
 import CodeSnippet from './CodeSnippet';
-
-const gridProps = {
-  flexDirection: 'row',
-  justifyContent: 'center',
-  alignItems: 'stretch',
-};
-
-const gridItemProps = {
-  flex: '1 0 50%',
-};
 
 export default () => (<Fragment>
   <Jumbotron>
@@ -34,7 +20,11 @@ export default () => (<Fragment>
       <Panel>
         <Section>
           <Header><code>makeContextComponents</code></Header>
-          <Subheader><code>import {'{'} makeContextComponents {'}'} from 'chameleon'</code></Subheader>
+          <Subheader>
+            <code>
+              import {'{'} makeContextComponents {'}'} from &apos;chameleon&apos;
+            </code>
+          </Subheader>
           <Paragraph>
             <code>makeContextComponents(contextReducer, initialContext)</code> is a function
             which takes a reducer and an initial context,
@@ -43,11 +33,16 @@ export default () => (<Fragment>
         </Section>
         <Section>
           <Header><code>functionReducer</code></Header>
-          <Subheader><code>import {'{'} functionReducer {'}'} from 'chameleon/lib/reducers';</code></Subheader>
+          <Subheader>
+            <code>
+              import {'{'} functionReducer {'}'} from &apos;chameleon/lib/reducers&apos;;
+            </code>
+          </Subheader>
           <Paragraph>
-            <code>functionReducer</code> is the recommended reducer. If a <code>functionReducer</code> is
-            passed to <code>makeContextComponents</code>, then <code>UpdateContext</code> has the following
-            API:
+            <code>functionReducer</code> is the recommended reducer. If
+            a <code>functionReducer</code> is passed
+            to <code>makeContextComponents</code>, then <code>UpdateContext</code> has
+            the following API:
           </Paragraph>
           <CodeSnippet
             code={'<UpdateContext call={someFunctionReturningANewContext} />'}
@@ -96,12 +91,13 @@ export default () => (<Fragment>
           <Paragraph>
             <ul>
               <li>
-                an <code>update</code> method, which returns a <strong>new, modified instance</strong> of
-                the <code>styleContext</code>.
+                an <code>update</code> method, which returns a <strong>new, modified
+                instance</strong> of the <code>styleContext</code>.
               </li>
               <li>
-                setters, e.g. <code>enterSection()</code>, which wrap calls to <code>update</code> and
-                which have easy-to-understand names that correspond to the component which will call them.
+                setters, e.g. <code>enterSection()</code>, which wrap calls
+                to <code>update</code> and which have easy-to-understand names that
+                correspond to the component which will call them.
               </li>
               <li>
                 getters, e.g. <code>get sectionStyles()</code>, which return the styles as a string.
